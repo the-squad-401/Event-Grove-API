@@ -1,23 +1,34 @@
 'use strict';
-const { server } = require('../src/server');
-const supergoose = require('./supergoose');
-const mockRequest = supergoose(server);
 
-const Businesses = require('../src/models/business/business');
+require('../supergoose');
+
+const Businesses = require('../../src/models/business/business');
+const Categories = require('../../src/models/category/category');
+
 let businesses = new Businesses();
+let categories = new Categories();
 
-describe('User models', () => {
-  let business = {
-    username: 'jacob8468',
-    password: 'password',
-    email: 'jacob.wendt@yahoo.com',
-    phone: '319-693-9955', 
-  };
+let testCategory;
+beforeAll(async () => {
+  testCategory = await categories.post({
+    name: 'Test',
+  });
+  console.log(testCategory);
+});
 
-  it('should save a user', async () => {
+describe('Business models', () => {
+  it('should save a business', async () => {
+    let business = {
+      name: 'Iowa Brewing Companions',
+      address: '1234 Iowa Blvd',
+      hours: [{day: 'M-F', open: "9AM", close: "6pm"}],
+      category: testCategory._id,
+      externalUrl: 'http://www.google.com',
+      description: 'A test',
+      bannerImage: 'http://www.google.com',
+      gallery: ['http://www.google.com', 'http://www.google.com'],
+    };
     let record = await businesses.post(business);
     expect(record).toHaveProperty('_id');
-    expect(record).toHaveProperty('username', 'jacob8468');
-    expect(record).toHaveProperty('usertype', 'user');
   });
 });

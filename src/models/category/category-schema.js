@@ -7,3 +7,5 @@ const category = mongoose.Schema({
   businesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Businesses'}],
   subscribers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
 });
+
+module.exports = mongoose.model('Categories', category);
