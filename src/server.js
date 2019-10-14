@@ -26,7 +26,7 @@ module.exports = {
   server: app,
   start: (PORT) => {
     app.listen(PORT, () => {
-      console.log(`I know that you came to party baby, baby, baby, baby on port ${PORT}`);
+      console.log(`🍻 I know that you came to party baby, baby, baby, baby on port ${PORT} 🍻`);
     });
   },
 };
