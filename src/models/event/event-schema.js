@@ -6,8 +6,8 @@ const events = mongoose.Schema({
   business: {type: mongoose.Schema.Types.ObjectId, ref: 'Businesses'},
   name: {type: String, required: true},
   description: {type: String, required: true},
-  startDate: {type: Date, required: true},
-  endDate: {type: Date, required: true},
+  startDate: {type: Number, required: true},
+  endDate: {type: Number, required: true},
   image: {type: String, required: false},
 });
 

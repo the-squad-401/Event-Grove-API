@@ -20,20 +20,20 @@ const businesses = mongoose.Schema({
   },
   hours: {
     type: [
-    {
-      day: {
-        type: String,
-        required: true,
-      },
-      open: {
-        type: String,
-        required: true,
-      },
-      close: {
-        type: String,
-        required: true,
-      }
-    }],
+      {
+        day: {
+          type: String,
+          required: true,
+        },
+        open: {
+          type: String,
+          required: true,
+        },
+        close: {
+          type: String,
+          required: true,
+        },
+      }],
     required: true,
   },
   category: {
@@ -57,7 +57,7 @@ const businesses = mongoose.Schema({
       type: String,
       required: true,
     }],
-    default: []
+    default: [],
   },
   subscribers: {
     type: [{

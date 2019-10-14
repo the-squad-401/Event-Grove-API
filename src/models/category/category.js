@@ -7,6 +7,10 @@ class Categories extends Model {
   constructor() {
     super(schema);
   }
+
+  async getByName(name) {
+    return await this.schema.findOne({name: name});
+  }
 }
 
 module.exports = Categories;

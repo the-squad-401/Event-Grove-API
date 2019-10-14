@@ -1,23 +1,33 @@
 'use strict';
-const { server } = require('../src/server');
-const supergoose = require('./supergoose');
-const mockRequest = supergoose(server);
+require('../supergoose');
 
-const Users = require('../src/models/user/user');
-let users = new Users();
+const Categories = require('../../src/models/category/category');
+let categories = new Categories();
 
-describe('User models', () => {
-  let user = {
-    username: 'jacob8468',
-    password: 'password',
-    email: 'jacob.wendt@yahoo.com',
-    phone: '319-693-9955', 
+describe('Category models', () => {
+  let category = {
+    name: 'Test Category',
   };
 
-  it('should save a user', async () => {
-    let record = await users.post(user);
+  let catId;
+
+  it('can post() a category', async () => {
+    let record = await categories.post(category);
+    catId = record._id;
     expect(record).toHaveProperty('_id');
-    expect(record).toHaveProperty('username', 'jacob8468');
-    expect(record).toHaveProperty('usertype', 'user');
+    expect(record).toHaveProperty('name', 'Test Category');
+    expect(record).toHaveProperty('subscribers');
+  });
+
+  it('can get() a category by id', async () => {
+    let record = await categories.get(catId);
+    expect(record).toHaveProperty('name', 'Test Category');
+
+  });
+
+  it('can getByName() a category by name', async () => {
+    let record = await categories.getByName('Test Category');
+    expect(record).toHaveProperty('name', 'Test Category');
+    expect(record).toHaveProperty('_id', catId);
   });
 });

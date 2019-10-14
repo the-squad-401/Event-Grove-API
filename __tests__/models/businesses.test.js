@@ -17,11 +17,11 @@ beforeAll(async () => {
 });
 
 describe('Business models', () => {
-  it('should save a business', async () => {
+  it('can post a business', async () => {
     let business = {
       name: 'Iowa Brewing Companions',
       address: '1234 Iowa Blvd',
-      hours: [{day: 'M-F', open: "9AM", close: "6pm"}],
+      hours: [{day: 'M-F', open: '9AM', close: '6pm'}],
       category: testCategory._id,
       externalUrl: 'http://www.google.com',
       description: 'A test',
@@ -30,5 +30,12 @@ describe('Business models', () => {
     };
     let record = await businesses.post(business);
     expect(record).toHaveProperty('_id');
+    expect(record).toHaveProperty('subscribers');
+    for (const key in business) {
+      expect(record).toHaveProperty(key);
+    }
+    console.log(record);
   });
+
+  
 });
