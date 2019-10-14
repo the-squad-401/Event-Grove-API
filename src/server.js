@@ -16,7 +16,9 @@ app.use(cors());
 app.use(morgan('dev'));
 
 //Routes
-
+app.get('/', (req, res) => {
+  res.status(200).send('Hello, world!');
+});
 
 //Catchalls
 app.use(notFound);

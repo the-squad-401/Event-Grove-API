@@ -1,10 +1,9 @@
 'use strict';
 
-const Business = 
 const mongoose = require('mongoose');
-const Schema = mongoose.Schema;
 
-const category = Schema({
+const category = mongoose.Schema({
   name: { type: String, required: true },
-  businesses: [{ type: Schema.Types.ObjectId, }]
+  businesses: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Businesses'}],
+  subscribers: [{type: mongoose.Schema.Types.ObjectId, ref: 'Users'}],
 });

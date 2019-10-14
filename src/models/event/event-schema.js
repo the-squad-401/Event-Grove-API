@@ -3,7 +3,7 @@
 const mongoose = require('mongoose');
 
 const events = mongoose.Schema({
-  business: {type: String, required: true},
+  business: {type: mongoose.Schema.Types.ObjectId, ref: 'Businesses'},
   name: {type: String, required: true},
   description: {type: String, required: true},
   startDate: {type: Date, required: true},

@@ -20,7 +20,7 @@ class Model {
 
     // If 1, return it as a plain object
     if (id) {
-      let payload = this.schema.findOne({ _id: id});
+      let payload = await this.schema.findOne({ _id: id});
       return payload;
     }
     // If 2, return it as an object like this:
@@ -37,10 +37,10 @@ class Model {
    * @param record {object} matches the format of the schema
    * @returns {*}
    */
-  post(record) {
+  async post(record) {
     // Call the appropriate mongoose method to create a new record
     let newRecord = new this.schema(record);
-    return newRecord.save();
+    return await newRecord.save();
   }
 
   /**
@@ -49,9 +49,9 @@ class Model {
    * @param record {object} The record data to replace. ID is a required field
    * @returns {*}
    */
-  put(id, record) {
+  async put(id, record) {
     // Call the appropriate mongoose method to update a record
-    return this.schema.findByIdAndUpdate(id, record, { new: true });
+    return await this.schema.findByIdAndUpdate(id, record, { new: true });
   }
 
   /**
@@ -59,9 +59,9 @@ class Model {
    * @param id {string} Mongo Record ID
    * @returns {*}
    */
-  delete(id) {
+  async delete(id) {
     // Call the appropriate mongoose method to delete a record
-    return this.schema.findByIdAndDelete(id);
+    return await this.schema.findByIdAndDelete(id);
   }
 
 }
