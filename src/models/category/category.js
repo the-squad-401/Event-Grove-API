@@ -11,6 +11,12 @@ class Categories extends Model {
   async getByName(name) {
     return await this.schema.findOne({name: name});
   }
+
+  async addSubscriber(catId, userId) {
+    let category = await this.get(catId);
+    category.subscribers.addToSet(userId); 
+    return await category.save();
+  }
 }
 
 module.exports = Categories;
