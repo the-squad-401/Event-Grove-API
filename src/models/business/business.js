@@ -18,6 +18,14 @@ class Businesses extends Model {
   }
 
   /**
+   * Gets all businesses sharing a category ID
+   * @param {String} categoryId 
+   */
+  async getByCategory(categoryId) {
+    return await this.schema.find({category: categoryId});
+  }
+
+  /**
    * Adds a subscriber to a business' subscriber pool
    * @param {mongoose.Schema.Types.ObjectId} businessId 
    * @param {mongoose.Schema.Types.ObjectId} userId 
