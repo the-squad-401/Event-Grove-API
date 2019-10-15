@@ -48,7 +48,7 @@ describe('Category models', () => {
   it('can put() a category by id', async () => {
     let updatedCat = {
       name: 'Test Category Updated',
-    }
+    };
 
     let record = await categories.put(catId, updatedCat);
     expect(record).toHaveProperty('_id', catId);

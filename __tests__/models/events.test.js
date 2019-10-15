@@ -29,7 +29,8 @@ beforeAll(async () => {
 });
 
 describe('Events models', () => {
-  it('can save an event', async () => {
+  let record;
+  it('can post() an event', async () => {
     let event = {
       business: business._id,
       name: 'Going out of business event',
@@ -39,10 +40,23 @@ describe('Events models', () => {
       image: 'http://www.google.com',
     };
     
-    let record = await events.post(event);
+    record = await events.post(event);
     expect(record).toHaveProperty('_id');
     for (const key in event) {
       expect(record).toHaveProperty(key, event[key]);
     }
+  });
+
+  it('can put() a event (update)', async () => {
+    expect(record).toHaveProperty('_id');
+    let updated = await events.put(record._id, {description: 'Updated'});
+    expect(updated.description).toBe('Updated');
+  });
+
+  it('can delete() a event', async () => {
+    expect(record).toHaveProperty('_id');
+    await events.delete(record._id);
+    let deleted = await events.get(record._id);
+    expect(deleted).toBeFalsy();
   });
 });
