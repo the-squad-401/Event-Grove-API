@@ -1,6 +1,5 @@
 'use strict';
 
-const mongoose = require('mongoose');
 const Model = require('../mongo');
 const schema = require('./business-schema');
 
@@ -19,8 +18,8 @@ class Businesses extends Model {
 
   /**
    * Adds a subscriber to a business' subscriber pool
-   * @param {mongoose.Schema.Types.ObjectId} businessId 
-   * @param {mongoose.Schema.Types.ObjectId} userId 
+   * @param {*} businessId 
+   * @param {*} userId 
    */
   async addSubscriber(businessId, userId) {
     let business = await this.get(businessId);
@@ -30,8 +29,8 @@ class Businesses extends Model {
 
   /**
    * Removes a subscriber from a business' subscriber pool
-   * @param {mongoose.Schema.Types.ObjectId} businessId 
-   * @param {mongoose.Schema.Types.ObjectId} userId 
+   * @param {*} businessId 
+   * @param {*} userId 
    */
   async removeSubscriber(businessId, userId) {
     let business = await this.get(businessId);
