@@ -76,6 +76,14 @@ describe('Business models', () => {
     expect([...gotten.subscribers]).toStrictEqual([]);
   });
 
+  it('cannot removeSubscriber() the same id twice', async () => {
+    expect(record).toHaveProperty('_id');
+    expect(testUser).toHaveProperty('_id');
+    await businesses.removeSubscriber(record._id, testUser._id);
+    let gotten = await businesses.get(record._id);
+    expect([...gotten.subscribers]).toStrictEqual([]);
+  });
+
   it('can delete() a business', async () => {
     expect(record).toHaveProperty('_id');
     await businesses.delete(record._id);
