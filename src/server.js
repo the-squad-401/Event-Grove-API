@@ -9,6 +9,9 @@ const morgan = require('morgan');
 const notFound = require('./middleware/404');
 const errorHandler = require('./middleware/500');
 
+//Routes
+const businessRoutes = require('./routes/businesses');
+
 const app = express();
 
 //Run Middlewate
@@ -16,6 +19,7 @@ app.use(cors());
 app.use(morgan('dev'));
 
 //Routes
+app.use(businessRoutes);
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!');
 });
