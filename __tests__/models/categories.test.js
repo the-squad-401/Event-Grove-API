@@ -64,12 +64,18 @@ describe('Category models', () => {
     expect(subscribersArray).toEqual([testUser._id]);    
   });
 
-  //Tried adding unique and dropDups to categories schema, not preventing duplicates
   it('addSubscriber() does not add duplicate subscribers', async () => {
     let record = await categories.addSubscriber(catId, testUser._id);
     let subscribersArray = [...record.subscribers];
 
     expect(subscribersArray).toEqual([testUser._id]);
+  });
+
+  it('removeSubscriber() removes the subscriber id', async () => {
+    let record = await categories.removeSubscriber(catId, testUser._id);
+    let subscribersArray = [...record.subscribers];
+
+    expect(subscribersArray).toEqual([]);
   });
 
 });
