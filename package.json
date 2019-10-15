@@ -22,7 +22,8 @@
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
-    "mongoose": "^5.7.4"
+    "mongoose": "^5.7.4",
+    "swagger": "^0.7.5"
   },
   "devDependencies": {
     "eslint": "^6.5.1",

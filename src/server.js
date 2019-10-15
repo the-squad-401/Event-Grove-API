@@ -15,6 +15,11 @@ const businessRoutes = require('./routes/businesses');
 
 const app = express();
 
+//Router
+
+const categoryRouter = require('./routes/categories');
+
+
 //Run Middlewate
 app.use(cors());
 app.use(morgan('dev'));
@@ -22,6 +27,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 //Routes
+app.use(categoryRouter);
 app.use(businessRoutes);
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!');
