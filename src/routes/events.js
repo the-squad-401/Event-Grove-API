@@ -6,6 +6,8 @@ const router = express.Router();
 const Events = require('../models/event/event');
 const Users = require('../models/user/user');
 
+const emitEvent = require('../event-emitter');
+
 const events = new Events();
 
 router.get('/events', getEvents);
@@ -46,6 +48,7 @@ async function postEvent(req,res,next) {
   try {
     const record = await events.post(req.body);
     res.status(201).send(record);
+    emitEvent(record);
   } catch (error) {
     next(error);
   }

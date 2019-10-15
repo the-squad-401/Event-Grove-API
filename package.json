@@ -19,6 +19,7 @@
   },
   "homepage": "https://github.com/the-squad-401/the-project#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
