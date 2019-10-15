@@ -10,6 +10,9 @@ const notFound = require('./middleware/404');
 const errorHandler = require('./middleware/500');
 const subscriptionRouter = require('./routes/subscriptions');
 
+//Routes
+const businessRoutes = require('./routes/businesses');
+
 const app = express();
 
 //Run Middlewate
@@ -19,6 +22,7 @@ app.use(express.json());
 app.use(express.urlencoded({extended:true}));
 
 //Routes
+app.use(businessRoutes);
 app.get('/', (req, res) => {
   res.status(200).send('Hello, world!');
 });

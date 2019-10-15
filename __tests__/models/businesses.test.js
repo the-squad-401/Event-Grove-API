@@ -12,6 +12,7 @@ let users = new Users();
 
 let testCategory;
 let testUser;
+
 beforeAll(async () => {
   testCategory = await categories.post({
     name: 'Test',
@@ -38,6 +39,12 @@ describe('Business models', () => {
     for (const key in business) {
       expect(record).toHaveProperty(key);
     }
+  });
+
+  it('can get() all businesses by omitting the _id', async () => {
+    let gotten = await businesses.get();
+    expect(gotten.count).toBe(1);
+    expect(gotten.results[0].toObject()).toEqual(record.toObject());
   });
 
   it('can get() a business', async () => {
