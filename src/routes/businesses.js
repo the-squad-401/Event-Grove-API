@@ -48,7 +48,7 @@ async function updateBusinessById(req, res, next) {
 
 async function createBusiness(req, res, next) {
   try {
-    let record = await businesses.post(req.body);
+    const record = await businesses.post(req.body);
     res.status(201).send(record);
   } catch (error) {
     next(error);
@@ -56,7 +56,7 @@ async function createBusiness(req, res, next) {
 }
 
 async function deleteBusiness(req, res, next) {
-  let record = await businesses.delete(req.params.id);
+  const record = await businesses.delete(req.params.id);
   sendRecord(record, req.params.id, res, next);
 }
 

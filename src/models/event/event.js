@@ -10,6 +10,14 @@ class Events extends Model {
   constructor() {
     super(schema);
   }
+
+  /**
+   * Gets all events sharing a category ID
+   * @param {String} categoryId 
+   */
+  async getByCategory(categoryId) {
+    return await this.schema.find({category: categoryId});
+  }
 }
 
 module.exports = exports = Events;
