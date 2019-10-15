@@ -4,6 +4,7 @@ const mongoose = require('mongoose');
 
 const events = mongoose.Schema({
   business: {type: mongoose.Schema.Types.ObjectId, ref: 'Businesses'},
+  category: {type: mongoose.Schema.Types.ObjectId, ref: 'Categories'},
   name: {type: String, required: true},
   description: {type: String, required: true},
   startDate: {type: Number, required: true}, // Epoch num

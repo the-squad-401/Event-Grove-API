@@ -33,6 +33,7 @@ describe('Events models', () => {
   it('can post() an event', async () => {
     let event = {
       business: business._id,
+      category: testCategory._id,
       name: 'Going out of business event',
       description: 'We lost all our money, so come get some free stuff',
       startDate: Date.now(),
