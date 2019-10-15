@@ -46,6 +46,11 @@ describe('Business models', () => {
     expect(record.toObject()).toStrictEqual(gotten.toObject());
   });
 
+  it('can getByName() a business', async () => {
+    let gotten = await businesses.getByName('Iowa Brewing Companions');
+    expect(record.toObject()).toStrictEqual(gotten.toObject());
+  });
+
   it('can put() a business (update)', async () => {
     expect(record).toHaveProperty('_id');
     let updated = await businesses.put(record._id, {description: 'Updated'});
