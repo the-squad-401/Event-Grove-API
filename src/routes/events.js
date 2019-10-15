@@ -13,9 +13,9 @@ const events = new Events();
 router.get('/events', getEvents);
 router.get('/events/:id', getEventById);
 router.get('/events/:category', getEventsByCategory);
-router.post('events/', postEvent);
-router.put('events/:id', updateEvent);
-router.delete('events/:id', deleteEvent);
+router.post('/events', postEvent);
+router.put('/events/:id', updateEvent);
+router.delete('/events/:id', deleteEvent);
 
 function get404(id) {
   const error = new Error(`No event found with id: ${id}`);

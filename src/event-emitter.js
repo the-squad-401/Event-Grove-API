@@ -19,7 +19,6 @@ const users = new Users();
 async function emitNotifications(event) {
   const businessId = event.business;
   const categoryId = event.category;
-  console.log(business, category);
 
   const business = await businesses.get(businessId);
   const category = await categories.get(categoryId);

@@ -5,11 +5,9 @@ const mockRequest = supergoose(server);
 
 const Businesses = require('../../src/models/business/business');
 const Categories = require('../../src/models/category/category');
-const Users = require('../../src/models/user/user');
 
 let businesses = new Businesses();
 let categories = new Categories();
-let users = new Users();
 
 let testCategory;
 let otherTestCategory;
