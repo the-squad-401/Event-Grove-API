@@ -14,6 +14,11 @@ router.put('/category/:id', auth, wrap(handlePut));
 router.delete('/category/:id', auth, wrap(handleDelete));
 
 /**
+* @typedef category
+* @property {string} name.required - name of the category
+*/
+
+/**
  * Wraps a route callback with a try/catch, which passes on uncaught errors to be properly handled
  * @param {Function} route the route to be wrapped
  */

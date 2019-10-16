@@ -12,11 +12,23 @@ router.post('/subscribers/:type/:id', createSubscriber);
 router.delete('/subscribers/:type/:id', deleteSubscriber);
 
 /**
+* @typedef subscribers
+* @property {Array.<object>} object
+*/
+
+/**
+ * @typedef object
+ * @property {string} userID.required
+ */
+
+/**
  * Retrieves and sends back all subscribers
- * @param {string} id.param.required - business or category
+ * @route GET /subscribers/{type}/{id}
  * 
- * @route GET /subscribers/:type/:id
- * @returns {object} 200 - An object containing each event, and count
+ * @param {string} type.path.required - business or category
+ * @param {string} id.path.required - id of business or category
+ * 
+ * @returns {object} 200 - An object containing each subscription, and count
  * @returns {Error} 500 - Unforseen difficulties.
  */
 function getSubscribers(req, res, next) {
@@ -39,8 +51,12 @@ function getSubscribers(req, res, next) {
 
 /**
  * Creates and sends back a new subscriber from JSON in the req.body for either a business or category
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
+ * @route POST /subscribers/{type}/{id}
+ * 
+ * @param {string} type.path.required - business or category
+ * @param {string} id.path.required - id of business or category
+ * 
+ * @param {string} userId.body.required - ID of user
  */
 async function createSubscriber(req, res, next) {
   if (req.params.type === 'business') {
@@ -54,9 +70,13 @@ async function createSubscriber(req, res, next) {
 }
 
 /**
- * Deletes and sends back a subscriber via ID
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
+ * Creates and sends back a new subscriber from JSON in the req.body for either a business or category
+ * @route DELETE /subscribers/{type}/{id}
+ * 
+ * @param {string} type.path.required - business or category
+ * @param {string} id.path.required - id of business or category
+ * 
+ * @param {string} userId.body.required - ID of user
  */
 async function deleteSubscriber(req, res, next) {
   if (req.params.type === 'business') {
