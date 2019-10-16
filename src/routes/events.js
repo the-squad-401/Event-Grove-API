@@ -15,6 +15,17 @@ router.put('/events/:id', wrap(updateEvent));
 router.delete('/events/:id', wrap(deleteEvent));
 
 /**
+ * @typedef Event
+ * @property {string} business.required - ID of Business
+ * @property {string} category.required - ID of Category
+ * @property {string} name.required - Event name
+ * @property {string} description.required - description of the Event
+ * @property {number} startDate.required - When the Event starts
+ * @property {number} endDate.required - When the Event ends
+ * @property {string} image.required - image of Event
+ */
+
+/**
  * Wraps a route callback with a try/catch, which passes on uncaught errors to be properly handled
  * @param {Function} route the route to be wrapped
  */
@@ -73,7 +84,7 @@ async function getEvents(req, res) {
  * Retrieves and sends back a single event via ID
  * @route GET /event/{id}
  * @param {string} id.path.required - ID of event to GET
- * @returns {object} 200 - an object containing the information of an event.
+ * @returns {Event.model} 200 - an object containing the information of an event.
  * @returns {Error} 404 - event with ID could not be found.
  */
 async function getEventById(req, res) {
@@ -96,8 +107,8 @@ async function getEventsByCategory(req, res) {
 /**
  * Creates and sends back a new event from JSON in the req.body
  * @route POST /event
- * @param {object} event.body.required - creates a new event
- * @returns {object} 200 - an event is created with the information submitted
+ * @param {Event.model} event.body.required - creates a new event
+ * @returns {Event.model} 200 - an event is created with the information submitted
  */
 async function postEvent(req, res) {
   const record = await events.post(req.body);
@@ -109,7 +120,7 @@ async function postEvent(req, res) {
  * @route PUT /event/{id}
  * @param {string} id.path.required - ID of the event to PUT
  * @param {object} update.body.required - Updated info
- * @returns {object} 200 - an object containing the information of the updated event
+ * @returns {Event.model} 200 - an object containing the information of the updated event
  * @returns {Error} 404 - event with ID could not be found 
  */
 async function updateEvent(req, res) {
@@ -122,7 +133,7 @@ async function updateEvent(req, res) {
  * Deletes and sends back, for the last time, a event via ID
  * @route DELETE /event/{id}
  * @param {string} id.path.required - ID of the event to DELETE
- * @returns {object} 200 - an object no longer containing the information for an event
+ * @returns {Event.model} 200 - an object no longer containing the information for an event
  * @returns {Error} 404 - event with ID could not be found
  */
 async function deleteEvent(req, res) {
