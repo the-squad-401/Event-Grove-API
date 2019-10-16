@@ -59,11 +59,11 @@ function send(record, res, status = 200) {
 }
 
 /**
- * Retrieves and sends back all the businesses
+ * Retrieves and sends back all the businesses, optionally within in a certain category via ID
  * @route GET /businesses
- * @returns {object} 200 - An object containing each business, and count
- * @returns {Error} 500 - Unforseen difficulties.
-*/
+ * @param {string} id.param.optional - ID of the category to GET businesses by
+ * @returns {object} 200 - An object containing each business
+ */
 async function getBusinesses(req, res) {
   const record = await businesses.get();
   send(record, res);
@@ -75,7 +75,6 @@ async function getBusinesses(req, res) {
  * @param {string} id.param.required - ID of the business to GET
  * @returns {object} 200 - An object containing the information for the business
  * @returns {Error}  404 - Business with ID could not be found
- * @returns {Error}  500 - Unforseen consequences
  */
 async function getBusinessById(req, res) {
   const record = await businesses.get(req.params.id);
@@ -83,13 +82,6 @@ async function getBusinessById(req, res) {
   send(record, res);
 }
 
-/**
- * Retrieves and sends back all the businesses in a certain category via ID
- * @route GET /businesses/:id
- * @param {string} id.param.required - ID of the category to GET businesses by
- * @returns {object} 200 - An object containing each business
- * @returns {Error}  500 - Unforseen consequences
- */
 async function getBusinessesByCategory(req, res) {
   const record = await businesses.getByCategory(req.params.category);
   send(record, res);
@@ -97,8 +89,10 @@ async function getBusinessesByCategory(req, res) {
 
 /**
  * Updates and sends back the new business via ID
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
+ * @route PUT /business
+ * @param {string} id.param.required - ID of the business to PUT
+ * @returns {object} 200 - An object containing the updated information for the business
+ * @returns {Error}  404 - Business with ID could not be found
  */
 async function updateBusinessById(req, res) {
   const record = await businesses.put(req.params.id, req.body);
@@ -108,8 +102,8 @@ async function updateBusinessById(req, res) {
 
 /**
  * Creates and sends back a new business from JSON in the req.body
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
+ * @route POST /business
+ * @returns {object} 201 - An object containing the created business
  */
 async function createBusiness(req, res) {
   const record = await businesses.post(req.body);
@@ -118,8 +112,9 @@ async function createBusiness(req, res) {
 
 /**
  * Deletes and sends back, for the last time, a business via ID
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
+ * @route DELETE /business
+ * @returns {object} 200 - An object containing the deleted businesses information
+ * @returns {Error}  404 - Business with ID could not be found
  */
 async function deleteBusiness(req, res) {
   const record = await businesses.delete(req.params.id);
