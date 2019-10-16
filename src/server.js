@@ -47,9 +47,8 @@ const options = {
   basedir: __dirname, //app absolute path
   files: ['./routes/**/*.js'], //Path to the API handle folder
 };
-expressSwagger(options),
 
-const app = express();
+expressSwagger(options);
 
 //Run Middlewate
 app.use(cors());
