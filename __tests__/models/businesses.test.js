@@ -96,6 +96,38 @@ describe('Business models', () => {
     expect([...gotten.subscribers]).toStrictEqual([]);
   });
 
+  it('can addOwner() a business', async () => {
+    expect(record).toHaveProperty('_id');
+    expect(testUser).toHaveProperty('_id');
+    await businesses.addOwner(record._id, testUser._id);
+    let gotten = await businesses.get(record._id);
+    expect([...gotten.owners]).toStrictEqual([testUser._id]);
+  });
+
+  it('cannot addOwner() the same id twice', async () => {
+    expect(record).toHaveProperty('_id');
+    expect(testUser).toHaveProperty('_id');
+    await businesses.addOwner(record._id, testUser._id);
+    let gotten = await businesses.get(record._id);
+    expect([...gotten.owners]).toStrictEqual([testUser._id]);
+  });
+
+  it('can removeOwner() a business', async () => {
+    expect(record).toHaveProperty('_id');
+    expect(testUser).toHaveProperty('_id');
+    await businesses.removeOwner(record._id, testUser._id);
+    let gotten = await businesses.get(record._id);
+    expect([...gotten.owners]).toStrictEqual([]);
+  });
+
+  it('cannot removeOwner() the same id twice', async () => {
+    expect(record).toHaveProperty('_id');
+    expect(testUser).toHaveProperty('_id');
+    await businesses.removeOwner(record._id, testUser._id);
+    let gotten = await businesses.get(record._id);
+    expect([...gotten.owners]).toStrictEqual([]);
+  });
+
   it('can delete() a business', async () => {
     expect(record).toHaveProperty('_id');
     await businesses.delete(record._id);

@@ -9,7 +9,7 @@ const SECRET = process.env.SECRET || '+m#XfN>!#8CZ/Z-5_YbGUpM&`2{WY"&J:N&#-XvPy#
 
 
 const Users = mongoose.Schema({
-  username: { type: String, required: true },
+  username: { type: String, required: true, unique: true},
   password: { type: String, required: true },
   email: { type: String, required: true },
   phone: { type: String, required: true },
@@ -44,10 +44,10 @@ Users.methods.comparePassword = function(password) {
     .then( valid => valid ? this : null );
 };
 
-Users.methods.generateToken = function(type) {
+Users.methods.generateToken = function() {
   let token = {
     id: this._id,
-    type: type || 'user',
+    type: this.usertype || 'user',
   };
   let options = { expiresIn: TOKEN_EXPIRE };
 

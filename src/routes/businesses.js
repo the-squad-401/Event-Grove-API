@@ -3,6 +3,9 @@
 const express = require('express');
 const router = express.Router();
 
+const jwt = require('jsonwebtoken');
+const auth = require('../auth/auth-middleware');
+
 const Businesses = require('../models/business/business');
 const businesses = new Businesses();
 
@@ -69,7 +72,7 @@ router.get('/business/:id', wrap(getBusinessById));
  * @returns {Business.model} 200 - An object containing the updated information for the business
  * @returns {Error}  404 - Business with ID could not be found
  */
-router.put('/business/:id', wrap(updateBusinessById));
+router.put('/business/:id', auth, wrap(updateBusinessById));
 /**
  * Creates and sends back a new business from JSON in the req.body
  * @route POST /business
@@ -77,7 +80,7 @@ router.put('/business/:id', wrap(updateBusinessById));
  * @returns {Business.model} 201 - An object containing the created business
  * @returns {Error} 500 - Business data was incorrect
  */
-router.post('/business', wrap(createBusiness));
+router.post('/business', auth, wrap(createBusiness));
 /**
  * Deletes and sends back, for the last time, a business via ID
  * @route DELETE /business/{id}
@@ -85,7 +88,7 @@ router.post('/business', wrap(createBusiness));
  * @returns {Business.model} 200 - An object containing the deleted businesses information
  * @returns {Error}  404 - Business with ID could not be found
  */
-router.delete('/business/:id', wrap(deleteBusiness));
+router.delete('/business/:id', auth, wrap(deleteBusiness));
 
 /**
  * Wraps a route callback with a try/catch, which passes on uncaught errors to be properly handled
@@ -108,6 +111,12 @@ function wrap(route) {
 function get404(id) {
   const error = new Error(`No business found with id: ${id}`);
   error.status = 404;
+  return error;
+}
+
+function get401() {
+  const error = new Error('You are not authorized to do this action');
+  error.status = 401;
   return error;
 }
 
@@ -156,18 +165,32 @@ async function getBusinessesByCategory(req, res) {
   send(record, res);
 }
 
+async function authOwner(req) {
+  const business = await businesses.get(req.params.id);
+  const tokenData = jwt.decode(req.token);
+  if (!business.owners.includes(tokenData.id) && tokenData.type !== 'admin') {
+    throw get401();
+  } 
+}
+
 async function updateBusinessById(req, res) {
+  await authOwner(req);
   const record = await businesses.put(req.params.id, req.body);
   verifyExists(record, req.params.id);
   send(record, res);
 }
 
 async function createBusiness(req, res) {
+  const tokenData = jwt.decode(req.token);
+  if (tokenData.type !== 'admin') {
+    throw get401();
+  }
   const record = await businesses.post(req.body);
   send(record, res, 201);
 }
 
 async function deleteBusiness(req, res) {
+  await authOwner(req);
   const record = await businesses.delete(req.params.id);
   verifyExists(record, req.params.id);
   send(record, res);

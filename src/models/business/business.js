@@ -45,6 +45,28 @@ class Businesses extends Model {
     business.subscribers.pull(userId);
     return await business.save();
   }
+
+  /**
+   * Adds a subscriber to a business' subscriber pool
+   * @param {String} businessId 
+   * @param {String} userId 
+   */
+  async addOwner(businessId, userId) {
+    let business = await this.get(businessId);
+    business.owners.addToSet(userId);
+    return await business.save();
+  }
+
+  /**
+   * Removes a subscriber from a business' subscriber pool
+   * @param {String} businessId 
+   * @param {String} userId 
+   */
+  async removeOwner(businessId, userId) {
+    let business = await this.get(businessId);
+    business.owners.pull(userId);
+    return await business.save();
+  }
 }
 
 module.exports = Businesses;
