@@ -16,7 +16,7 @@ module.exports = (req, res, next) => {
       return _authError();
     }
   } catch (error) {
-    _authError(error);
+    return _authError(error);
   }
 
   function _authBasic(str) {
@@ -32,7 +32,7 @@ module.exports = (req, res, next) => {
   }
 
   function _authBearer(authString) {
-    return users.authenticateToken(authString)
+    return users.schema.authenticateToken(authString)
       .then( user => _authenticate(user))
       .catch(_authError);
   }
@@ -47,9 +47,8 @@ module.exports = (req, res, next) => {
     }
   }
 
-  function _authError(error) {
+  async function _authError(error) {
     req.user = null;
-    console.log(error);
     next({
       status: 401,
       message: 'Invalid Login Credentials',
