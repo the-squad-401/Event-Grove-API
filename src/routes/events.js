@@ -2,17 +2,22 @@
 
 const express = require('express');
 const router = express.Router();
+const jwt = require('jsonwebtoken');
+
+const auth = require('../auth/auth-middleware');
 
 const Events = require('../models/event/event');
+const Businesses = require('../models/business/business');
+const businesses = new Businesses();
 
 const events = new Events();
 
 router.get('/events', wrap(getEvents));
 router.get('/events/:id', wrap(getEventById));
 router.get('/events/:category', wrap(getEventsByCategory));
-router.post('/events', wrap(postEvent));
-router.put('/events/:id', wrap(updateEvent));
-router.delete('/events/:id', wrap(deleteEvent));
+router.post('/events', auth, wrap(postEvent));
+router.put('/events/:id', auth, wrap(updateEvent));
+router.delete('/events/:id', auth, wrap(deleteEvent));
 
 /**
  * @typedef Event
@@ -104,6 +109,19 @@ async function getEventsByCategory(req, res) {
   send(record, res);
 }
 
+function get401() {
+  const error = new Error('You are not authorized to do this action');
+  error.status = 401;
+  return error;
+}
+
+async function authOwner(tokenData, businessId) {
+  const business = await businesses.get(businessId);
+  if (!business.owners.includes(tokenData.id) && tokenData.type !== 'admin') {
+    throw get401();
+  } 
+}
+
 /**
  * Creates and sends back a new event from JSON in the req.body
  * @route POST /event
@@ -111,6 +129,8 @@ async function getEventsByCategory(req, res) {
  * @returns {Event.model} 200 - an event is created with the information submitted
  */
 async function postEvent(req, res) {
+  const tokenData = jwt.decode(req.token);
+  await authOwner(tokenData, req.body.business);
   const record = await events.post(req.body);
   send(record, res, 201);
 }
@@ -124,7 +144,9 @@ async function postEvent(req, res) {
  * @returns {Error} 404 - event with ID could not be found 
  */
 async function updateEvent(req, res) {
-  const record = await events.put(req.params.id, req.body);
+  let record = await events.get(req.params.id);
+  await authOwner(jwt.decode(req.token), record.business);
+  record = await events.put(req.params.id, req.body);
   verifyExists(record, req.params.id);
   send(record, res);
 }
@@ -137,7 +159,9 @@ async function updateEvent(req, res) {
  * @returns {Error} 404 - event with ID could not be found
  */
 async function deleteEvent(req, res) {
-  const record = await events.delete(req.params.id);
+  let record = await events.get(req.params.id);
+  await authOwner(jwt.decode(req.token), record.business);
+  record = await events.delete(req.params.id);
   verifyExists(record, req.params.id);
   send(record, res);
 }
