@@ -30,7 +30,7 @@ function wrap(route) {
  * @param {String} id the id of the business that could not be found.
  */
 function get404(id) {
-  const error = new Error(`No business found with id: ${id}`);
+  const error = new Error(`No categories found with id: ${id}`);
   error.status = 404;
   return error;
 }
