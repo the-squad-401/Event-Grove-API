@@ -9,8 +9,6 @@ const morgan = require('morgan');
 const notFound = require('./middleware/404');
 const errorHandler = require('./middleware/500');
 
-const app = express();
-
 //Routes
 const categoryRouter = require('./routes/categories');
 const businessRouter = require('./routes/businesses');
@@ -18,20 +16,19 @@ const eventRouter = require('./routes/events');
 const subscriptionRouter = require('./routes/subscriptions');
 
 
+const app = express();
+
 //Run Middlewate
 app.use(cors());
 app.use(morgan('dev'));
 app.use(express.json());
-app.use(express.urlencoded({extended:true}));
+app.use(express.urlencoded({ extended: true }));
 
 //Routes
 app.use(eventRouter);
 app.use(categoryRouter);
 app.use(businessRouter);
 app.use(subscriptionRouter);
-app.get('/', (req, res) => {
-  res.status(200).send('Hello, world!');
-});
 
 
 //Catchalls

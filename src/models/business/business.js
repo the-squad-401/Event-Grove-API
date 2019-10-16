@@ -26,8 +26,8 @@ class Businesses extends Model {
 
   /**
    * Adds a subscriber to a business' subscriber pool
-   * @param {*} businessId 
-   * @param {*} userId 
+   * @param {String} businessId 
+   * @param {String} userId 
    */
   async addSubscriber(businessId, userId) {
     let business = await this.get(businessId);
@@ -37,8 +37,8 @@ class Businesses extends Model {
 
   /**
    * Removes a subscriber from a business' subscriber pool
-   * @param {*} businessId 
-   * @param {*} userId 
+   * @param {String} businessId 
+   * @param {String} userId 
    */
   async removeSubscriber(businessId, userId) {
     let business = await this.get(businessId);
