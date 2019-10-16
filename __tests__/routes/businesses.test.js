@@ -97,7 +97,6 @@ describe('Business Routes', () => {
       .get(`/business/${record._id}`)
       .expect(200)
       .then(results => {
-        console.log(results.body);
         for (const key in testBusiness) {
           if (key === 'hours') {
             continue; // Hard to test hours, since they get a _id added to them
