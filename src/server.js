@@ -14,6 +14,7 @@ const eventRouter = require('./routes/events');
 const categoryRouter = require('./routes/categories');
 const businessRouter = require('./routes/businesses');
 const subscriptionRouter = require('./routes/subscriptions');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
@@ -61,6 +62,7 @@ app.use(eventRouter);
 app.use(categoryRouter);
 app.use(businessRouter);
 app.use(subscriptionRouter);
+app.use(authRouter);
 
 //Catchalls
 app.use(notFound);

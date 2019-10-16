@@ -42,5 +42,54 @@ describe('Auth middleware', () => {
         });
         
     });
+
+    it('logs in user with correct basic credentials', () => {
+      let req = {
+        headers: {
+          authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
+        },
+      };
+      let res = {};
+      let next = jest.fn();
+      let middleware = auth;
+
+      return middleware(req, res, next)
+        .then( () => {
+          savedToken = req.token;
+          expect(next).toHaveBeenCalledWith();
+        });
+
+    });
+
+    it('fails for incorrect bearer token', async () => {
+      let req = {
+        headers: {
+          authorization: 'Bearer foo',
+        },
+      };
+      let res = {};
+      let next = jest.fn();
+      let middleware = auth;
+
+      await middleware(req, res, next);
+      expect(next).toHaveBeenCalledWith({ status: 401, message: 'Invalid Login Credentials' });
+    });
+
+    it('logs in with correct bearer token', async () => {
+      let req = {
+        headers: {
+          authorization: `Bearer ${savedToken}`,
+        },
+      };
+      let res = {};
+      let next = jest.fn();
+      let middleware = auth;
+
+      await middleware(req, res, next);
+      expect(next).toHaveBeenCalledWith();
+    });
+
+
+
   });
 });
