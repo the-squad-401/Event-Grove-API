@@ -1,0 +1,413 @@
+{
+  "openapi" : "3.0.1",
+  "info" : {
+    "title" : "EventGrove",
+    "description" : "Connect consumers and local businesses for spur of the moment deals",
+    "version" : "1.0.0"
+  },
+  "servers" : [ {
+    "url" : "http://www.EventGrove.com"
+  } ],
+  "paths" : {
+    "/event" : {
+      "post" : {
+        "description" : "Business owners/admins can add events",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.EventGrove.com/event"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.EventGrove.com/event"
+      } ]
+    },
+    "/subscribers/:category/:id" : {
+      "get" : {
+        "description" : "Users can subscribe to categories to be notified of new events",
+        "responses" : { 
+          "default" : {
+            "description" : "we need a response"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/subscribers/:categories/:id"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/subscribers/:categories/:id"
+      } ]
+    },
+    "/events" : {
+      "get" : {
+        "description" : "Users can get all events",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/events"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/events"
+      } ]
+    },
+    "/subscribers/:category" : {
+      "post" : {
+        "description" : "if logged in can subscribe to a category",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/subscribers/:category"
+        } ]
+      },
+      "delete" : {
+        "description" : "if logged in can opt out of a category",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/subscribers/:category"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/subscribers/:category"
+      } ]
+    },
+    "/subscribers/:business" : {
+      "post" : {
+        "description" : "users can subscribe to a business if they/'re logged in",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/subscribers/:business"
+        } ]
+      },
+      "delete" : {
+        "description" : "users can opt out of businesses subscriptions",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/subscribers/:business"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/subscribers/:business"
+      } ]
+    },
+    "/subscribers/:business/:id" : {
+      "get" : {
+        "description" : "logged in users can view active subscriptions to businesses",
+        "responses" : {
+          "default" : {
+            "description" : "we need a response"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/subscribers/:business/:id"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/subscribers/:business/:id"
+      } ]
+    },
+    "/business/:id" : {
+      "get" : {
+        "description" : "users can find a single business",
+        "responses" : {
+          "default" : {
+            "description" : "we need a response"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/business/:id"
+        } ]
+      },
+      "put" : {
+        "description" : "business owners and admins can update businesses",
+        "responses" : {
+          "default" : {
+            "description" : "we need a response"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/business/:id"
+        } ]
+      },
+      "delete" : {
+        "description" : "business owners and admins can delete businesses",
+        "responses" : {
+          "default" : {
+            "description" : "we need a response"
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/business/:id"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/business/:id"
+      } ]
+    },
+    "/events/:category" : {
+      "get" : {
+        "description" : "finds all events by category",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/events/:category"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/events/:category"
+      } ]
+    },
+    "/event/:id" : {
+      "get" : {
+        "description" : "finds a single event",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/event/:id"
+        } ]
+      },
+      "put" : {
+        "description" : "business owner and admin can update event",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/event/:id"
+        } ]
+      },
+      "delete" : {
+        "description" : "business owner and admin can delete event",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/event/:id"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/event/:id"
+      } ]
+    },
+    "/business" : {
+      "post" : {
+        "description" : "admins can create businesses",
+        "responses" : {
+          "500" : {
+            "description" : "unforseen difficulties",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/business"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/business"
+      } ]
+    },
+    "/businesses" : {
+      "get" : {
+        "description" : "shows all businesses",
+        "responses" : {
+          "200" : {
+            "description" : "object(s) returned",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/businesses"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/businesses"
+      } ]
+    },
+    "/category" : {
+      "put" : {
+        "description" : "Admins can update a catergory",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/category"
+        } ]
+      },
+      "post" : {
+        "description" : "Admins can create a category",
+        "responses" : {
+          "500" : {
+            "description" : "unforseen issue",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/category"
+        } ]
+      },
+      "delete" : {
+        "description" : "Admin can delete a category",
+        "responses" : {
+          "404" : {
+            "description" : "page not found",
+            "content" : {
+              "application/json; charset=utf-8" : {
+                "schema" : {
+                  "type" : "string"
+                },
+                "examples" : { }
+              }
+            }
+          }
+        },
+        "servers" : [ {
+          "url" : "http://www.eventgrove.com/category"
+        } ]
+      },
+      "servers" : [ {
+        "url" : "http://www.eventgrove.com/category"
+      } ]
+    }
+  }
+}

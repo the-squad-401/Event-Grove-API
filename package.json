@@ -19,17 +19,21 @@
   },
   "homepage": "https://github.com/the-squad-401/the-project#readme",
   "dependencies": {
+    "@sendgrid/mail": "^6.4.0",
+    "bcrypt": "^3.0.6",
     "cors": "^2.8.5",
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
+    "jsonwebtoken": "^8.5.1",
     "mongoose": "^5.7.4",
+    "morgan": "^1.9.1",
     "swagger": "^0.7.5"
   },
   "devDependencies": {
     "eslint": "^6.5.1",
+    "express-swagger-generator": "^1.1.15",
     "jest": "^24.9.0",
     "mongodb-memory-server": "^5.2.8",
-    "morgan": "^1.9.1",
     "supertest": "^4.0.2"
   }
 }

@@ -13,7 +13,7 @@ describe('API', () => {
 
   it('returns 200 for a valid route', () => {
     return mockRequest
-      .get('/')
+      .get('/categories')
       .expect(200);
   });
 });
