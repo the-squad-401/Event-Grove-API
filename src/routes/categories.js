@@ -6,8 +6,6 @@ const router = express.Router();
 const Model = require('../models/category/category');
 const modelRepository = new Model();
 
-var mongoose = require('mongoose');
-
 router.get('/categories', handleGet);
 router.post('/category', handlePost);
 router.put('/category/:id', handlePut);

@@ -12,6 +12,8 @@ let categories = new Categories();
 let testCategory;
 let otherTestCategory;
 
+let testBusiness;
+
 beforeAll(async () => {
   testCategory = await categories.post({
     name: 'Test',
@@ -19,6 +21,16 @@ beforeAll(async () => {
   otherTestCategory = await categories.post({
     name: 'Another Test',
   });
+  testBusiness = {
+    name: 'Iowa Brewing Companions',
+    address: '1234 Iowa Blvd',
+    category: testCategory._id,
+    hours: [{day: 'M-F', open: '9AM', close: '6pm'}],
+    externalUrl: 'http://www.google.com',
+    description: 'A test',
+    bannerImage: 'http://www.google.com',
+    gallery: ['http://www.google.com', 'http://www.google.com'],
+  };
   await businesses.post({
     name: 'Mapped Room',
     address: '1234 Iowa Blvd',
@@ -42,24 +54,14 @@ beforeAll(async () => {
 });
 
 describe('Business Routes', () => {
-  const bidness = {
-    name: 'Iowa Brewing Companions',
-    address: '1234 Iowa Blvd',
-    hours: [{day: 'M-F', open: '9AM', close: '6pm'}],
-    externalUrl: 'http://www.google.com',
-    description: 'A test',
-    bannerImage: 'http://www.google.com',
-    gallery: ['http://www.google.com', 'http://www.google.com'],
-  };
 
   let record;
 
   //TODO Add authorization (Admin)
   it('POST /business creates a new business', async () => {
-    bidness.category = testCategory._id; //Setting it here, since it's undefined until this point.
     await mockRequest
       .post('/business')
-      .send(bidness)
+      .send(testBusiness)
       .expect(201)
       .then(results => {
         record = results.body;
@@ -80,11 +82,11 @@ describe('Business Routes', () => {
           }
         }
         expect(added).toBeTruthy();
-        for (const key in bidness) {
+        for (const key in testBusiness) {
           if (key === 'hours') {
             continue; // Hard to test hours, since they get a _id added to them
           }
-          expect(JSON.stringify(added[key])).toBe(JSON.stringify(bidness[key]));
+          expect(JSON.stringify(added[key])).toBe(JSON.stringify(testBusiness[key]));
         }
       });
   });
@@ -95,12 +97,11 @@ describe('Business Routes', () => {
       .get(`/business/${record._id}`)
       .expect(200)
       .then(results => {
-        console.log(results.body);
-        for (const key in bidness) {
+        for (const key in testBusiness) {
           if (key === 'hours') {
             continue; // Hard to test hours, since they get a _id added to them
           }
-          expect(JSON.stringify(results.body[key])).toBe(JSON.stringify(bidness[key]));
+          expect(JSON.stringify(results.body[key])).toBe(JSON.stringify(testBusiness[key]));
         }
       });
   });

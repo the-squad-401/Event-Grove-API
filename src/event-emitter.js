@@ -17,11 +17,8 @@ const users = new Users();
 
 
 async function emitNotifications(event) {
-  const businessId = event.business;
-  const categoryId = event.category;
-
-  const business = await businesses.get(businessId);
-  const category = await categories.get(categoryId);
+  const business = await businesses.get(event.business);
+  const category = await categories.get(event.category);
   const visited = {};
 
   for (const userId of business.subscribers) {
@@ -37,6 +34,7 @@ async function emitNotifications(event) {
 }
 
 function createEmail(user, event) {
+  console.log(user.email);
   return {
     to: user.email,
     from: EMAIL_PROVIDER,
@@ -45,8 +43,10 @@ function createEmail(user, event) {
   };
 }
 
-function sendNotification(user, event) {
-  user = users.get(user);
+async function sendNotification(user, event) {
+  console.log(await users.get());
+  user = await users.get(user);
+  console.log(user);
   sgMail.send(createEmail(user, event));
 }
 
