@@ -2,14 +2,17 @@
 const express = require('express');
 const router = express.Router();
 
+const jwt = require('jsonwebtoken');
+const auth = require('../auth/auth-middleware');
+
 const Businesses = require('../models/business/business');
 const businesses = new Businesses();
 const Categories = require('../models/category/category');
 const categories = new Categories();
 
 router.get('/subscribers/:type/:id', getSubscribers);
-router.post('/subscribers/:type/:id', createSubscriber);
-router.delete('/subscribers/:type/:id', deleteSubscriber);
+router.post('/subscribers/:type/:id', auth, createSubscriber);
+router.delete('/subscribers/:type/:id', auth, deleteSubscriber);
 
 /**
 * @typedef subscribers
@@ -59,12 +62,14 @@ function getSubscribers(req, res, next) {
  * @param {string} userId.body.required - ID of user
  */
 async function createSubscriber(req, res, next) {
+  const { id } = jwt.decode(req.token);
+  console.log(id);
   if (req.params.type === 'business') {
-    let result = await businesses.addSubscriber(req.params.id, req.body.userId);
+    let result = await businesses.addSubscriber(req.params.id, id);
     res.status(201).json(result.subscribers);
   }
   if (req.params.type === 'category') {
-    let result = await categories.addSubscriber(req.params.id, req.body.userId);
+    let result = await categories.addSubscriber(req.params.id, id);
     res.status(201).json(result.subscribers);
   }
 }
@@ -79,12 +84,14 @@ async function createSubscriber(req, res, next) {
  * @param {string} userId.body.required - ID of user
  */
 async function deleteSubscriber(req, res, next) {
+  const { id } = jwt.decode(req.token);
+  console.log(id);
   if (req.params.type === 'business') {
-    let result = await businesses.removeSubscriber(req.params.id, req.body.userId);
+    let result = await businesses.removeSubscriber(req.params.id, id);
     res.status(200).json(result.subscribers);
   }
   if (req.params.type === 'category') {
-    let result = await categories.removeSubscriber(req.params.id, req.body.userId);
+    let result = await categories.removeSubscriber(req.params.id, id);
     res.status(200).json(result.subscribers);
   }
 }

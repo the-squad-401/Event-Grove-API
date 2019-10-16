@@ -1,18 +1,22 @@
 'use strict';
+
 const { server } = require('../../src/server');
 const supergoose = require('../supergoose');
 const mockRequest = supergoose(server);
 
 const Businesses = require('../../src/models/business/business');
 const Categories = require('../../src/models/category/category');
+const Users = require('../../src/models/user/user');
 
 let businesses = new Businesses();
 let categories = new Categories();
+let users = new Users();
 
 let testCategory;
 let otherTestCategory;
 
 let testBusiness;
+let testUser;
 
 beforeAll(async () => {
   testCategory = await categories.post({
@@ -31,6 +35,13 @@ beforeAll(async () => {
     bannerImage: 'http://www.google.com',
     gallery: ['http://www.google.com', 'http://www.google.com'],
   };
+  testUser = await users.post({
+    username: 'admin',
+    password: 'admin',
+    email: 'admin',
+    phone: 'admin',
+    usertype: 'admin',
+  });
   await businesses.post({
     name: 'Mapped Room',
     address: '1234 Iowa Blvd',
@@ -61,6 +72,7 @@ describe('Business Routes', () => {
   it('POST /business creates a new business', async () => {
     await mockRequest
       .post('/business')
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .send(testBusiness)
       .expect(201)
       .then(results => {
@@ -119,6 +131,7 @@ describe('Business Routes', () => {
   it('PUT /business/:id updates a business', async () => {
     await mockRequest
       .put(`/business/${record._id}`)
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .send({description: 'Updated'})
       .expect(200)
       .then(results => {
@@ -130,6 +143,7 @@ describe('Business Routes', () => {
   it('DELETE /business/:id deletes a busines by id', async () => {
     await mockRequest
       .delete(`/business/${record._id}`)
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .expect(200)
       .then(async (results) => {
         const deleted = results.body;
@@ -144,6 +158,7 @@ describe('Business Routes', () => {
   it('PUT /business/:id responds with 404 if business not found', async () => {
     await mockRequest
       .put(`/business/${record._id}`)
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .send({description: 'Updated'})
       .expect(404);
   });
@@ -157,6 +172,7 @@ describe('Business Routes', () => {
   it('DELETE /business/:id responds with 404 if business not found', async () => {
     await mockRequest
       .delete(`/business/${record._id}`)
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .expect(404);
   });
 });

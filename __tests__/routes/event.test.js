@@ -6,20 +6,31 @@ const mockRequest = supergoose(server);
 
 const Businesses = require('../../src/models/business/business');
 const Categories = require('../../src/models/category/category');
+const Users = require('../../src/models/user/user');
 
 let businesses = new Businesses();
 let categories = new Categories();
+let users = new Users();
 
 let mockBiz;
 let mockCategory;
+let testUser;
 
 beforeAll(async () => {
   mockCategory = await categories.post({
     name: 'Test',
   });
+  testUser = await users.post({
+    username: 'admin',
+    password: 'admin',
+    email: 'admin',
+    phone: 'admin',
+    usertype: 'admin',
+  });
   mockBiz = await businesses.post({
     name: 'Bobs Building Company',
     address: '666 no st.',
+    owners: [testUser._id],
     hours: [{day: 'M-T', open: '1AM', close: '130AM'}],
     category: mockCategory._id,
     externalUrl: 'http://www.askjeeves.com',
@@ -27,6 +38,7 @@ beforeAll(async () => {
     bannerImage: 'http://www.christianmingle.com',
     gallery: ['http://www.hellokitty.org', 'http://www.mario.com'],
   });
+
 });
 
 describe('event route', () => {
@@ -44,6 +56,7 @@ describe('event route', () => {
     };
     await mockRequest
       .post('/events')
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .send(event)
       .expect(201)
       .then(results => {
@@ -76,6 +89,7 @@ describe('event route', () => {
   it('PUT /events/:id updates an existing event', async () => {
     await mockRequest
       .put(`/events/${record._id}`)
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .send({description: 'updated'})
       .expect(200)
       .then(results => {
@@ -86,6 +100,7 @@ describe('event route', () => {
     event.description = 'updated';
     await mockRequest
       .delete(`/events/${record._id}`)
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .then(async (results) => {
         expect(results.body._id).toBe(record._id);
         for (const key in event) {
@@ -101,12 +116,14 @@ describe('event route', () => {
   it('DELETE /events/:id throws 404 if ID not found', async () => {
     await mockRequest
       .delete(`/events/${record._id}`)
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .expect(404);
   });
   
   it('/PUT /events/:id will respond with a 404 if ID not found', async () => {
     await mockRequest
       .put(`/events/${record._id}`)
+      .set('Authorization', `Bearer ${testUser.generateToken()}`)
       .expect(404);
   });
 });
