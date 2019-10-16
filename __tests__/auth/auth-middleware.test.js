@@ -11,17 +11,15 @@ let users = {
 };
 
 beforeAll(async () => {
-  const admin = await usersModel.post(users.admin);
-  const user = await usersModel.post(users.user);
+  await usersModel.post(users.admin);
+  await usersModel.post(users.user);
 });
 
 describe('Auth middleware', () => {
 
-  // admin:foo: YWRtaW46Zm9v
-  // admin:password: YWRtaW46cGFzc3dvcmQ=
-  // user:password: dXNlcjpwYXNzd29yZA==
-  
-  let errorMessage = 'Invalid Login Credentials';
+  //Invalid Login - admin:foo: YWRtaW46Zm9v
+  //Valid Login - admin:password: YWRtaW46cGFzc3dvcmQ=
+  //Valid Login - user:password: dXNlcjpwYXNzd29yZA==
 
   describe('user authentication', () => {
     let savedToken;
