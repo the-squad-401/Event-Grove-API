@@ -14,6 +14,7 @@ const eventRouter = require('./routes/events');
 const categoryRouter = require('./routes/categories');
 const businessRouter = require('./routes/businesses');
 const subscriptionRouter = require('./routes/subscriptions');
+const authRouter = require('./routes/auth');
 
 const app = express();
 
@@ -28,7 +29,7 @@ const options = {
       title: 'Event Grove',
       version: '1.0.0',
     },
-    host: `localhost:3001`,
+    host: `localhost:3000`,
     basePath: '/',
     produces: [
       'application/json',
@@ -47,9 +48,8 @@ const options = {
   basedir: __dirname, //app absolute path
   files: ['./routes/**/*.js'], //Path to the API handle folder
 };
-expressSwagger(options),
 
-const app = express();
+expressSwagger(options);
 
 //Run Middlewate
 app.use(cors());
@@ -62,6 +62,7 @@ app.use(eventRouter);
 app.use(categoryRouter);
 app.use(businessRouter);
 app.use(subscriptionRouter);
+app.use(authRouter);
 
 //Catchalls
 app.use(notFound);

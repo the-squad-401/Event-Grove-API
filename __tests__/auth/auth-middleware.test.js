@@ -3,6 +3,7 @@
 require('../supergoose');
 const auth = require('../../src/auth/auth-middleware');
 const Users = require('../../src/models/user/user');
+const usersModel = new Users();
 
 let users = {
   admin: {username: 'admin', password: 'password', email: 'admin@xyz.com', phone: '555-555-5555', usertype: 'admin'},
@@ -10,8 +11,8 @@ let users = {
 };
 
 beforeAll(async () => {
-  const admin = await new Users(users.admin).save();
-  const user = await new Users(users.user).save();
+  const admin = await usersModel.post(users.admin);
+  const user = await usersModel.post(users.user);
 });
 
 describe('Auth middleware', () => {
@@ -33,7 +34,7 @@ describe('Auth middleware', () => {
       };
       let res = {};
       let next = jest.fn();
-      let middleware = auth();
+      let middleware = auth;
 
       return middleware(req, res, next)
         .then(() => {
@@ -41,5 +42,54 @@ describe('Auth middleware', () => {
         });
         
     });
+
+    it('logs in user with correct basic credentials', () => {
+      let req = {
+        headers: {
+          authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
+        },
+      };
+      let res = {};
+      let next = jest.fn();
+      let middleware = auth;
+
+      return middleware(req, res, next)
+        .then( () => {
+          savedToken = req.token;
+          expect(next).toHaveBeenCalledWith();
+        });
+
+    });
+
+    it('fails for incorrect bearer token', async () => {
+      let req = {
+        headers: {
+          authorization: 'Bearer foo',
+        },
+      };
+      let res = {};
+      let next = jest.fn();
+      let middleware = auth;
+
+      await middleware(req, res, next);
+      expect(next).toHaveBeenCalledWith({ status: 401, message: 'Invalid Login Credentials' });
+    });
+
+    it('logs in with correct bearer token', async () => {
+      let req = {
+        headers: {
+          authorization: `Bearer ${savedToken}`,
+        },
+      };
+      let res = {};
+      let next = jest.fn();
+      let middleware = auth;
+
+      await middleware(req, res, next);
+      expect(next).toHaveBeenCalledWith();
+    });
+
+
+
   });
 });

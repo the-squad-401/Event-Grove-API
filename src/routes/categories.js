@@ -6,14 +6,28 @@ const router = express.Router();
 const Model = require('../models/category/category');
 const modelRepository = new Model();
 
-router.get('/categories', handleGet);
-router.post('/category', handlePost);
-router.put('/category/:id', handlePut);
-router.delete('/category/:id', handleDelete);
+router.get('/categories', wrap(handleGet));
+router.post('/category', wrap(handlePost));
+router.put('/category/:id', wrap(handlePut));
+router.delete('/category/:id', wrap(handleDelete));
+
+/**
+ * Wraps a route callback with a try/catch, which passes on uncaught errors to be properly handled
+ * @param {Function} route the route to be wrapped
+ */
+function wrap(route) {
+  return async (req, res, next) => {
+    try {
+      await route(req, res, next);
+    } catch (error) {
+      next(error);
+    }
+  };
+}
 
 /**
  * Creates an error with a 404 status
- * @param {String} id the id of the category that could not be found.
+ * @param {String} id the id of the business that could not be found.
  */
 function get404(id) {
   const error = new Error(`No category found with id: ${id}`);
@@ -26,63 +40,78 @@ function get404(id) {
  * @param {Object} record the record to verify
  * @param {String} id the id of the record (for the 404)
  */
-function sendRecord(record, id, res, next) {
+function verifyExists(record, id) {
   if (!record) {
-    next(get404(id));
-  } else {
-    res.status(200).json(record);
+    throw get404(id);
   }
 }
 
 /**
- * Retrieves and sends back all categories
- * @route GET /categories
- * @returns {object} 200 - An object containing each category, and count
- * @returns {Error} 500 - Unforseen difficulties.
+ * Sends a record to a response, with a default status of 200
+ * @param {Object} record the record
+ * @param {Response} res the Express Response
+ * @param {Number} status a status code (200 by default)
+ */
+function send(record, res, status = 200) {
+  res.status(status).json(record);
+}
+
+/**
+ * get all categories
+ * @route get /categories
+ * @produces application/json application/xml
+ * @consumes application/json application/xml
+ * @returns {object} 200 - OK 
+ * @returns {error} 500 - Internal Server Error
  */
 async function handleGet(req, res, next) {
-  res.status(200).json(await modelRepository.get());
+  let record = await modelRepository.get();
+  send(record, res);
 }
 
 /**
- * Retrieves and sends back a category based on id
- * @route GET /categories/:id
- * @returns {object} 200 - An object containing each category, and count
- * @returns {Error} 500 - Unforseen difficulties.
+ * post a new category
+ * @route POST /category
+ * @param {category.model} name.body.required - name of the category
+ * @produces application/json application/xml
+ * @consumes application/json application/xml
+ * @returns {object} 201 - category created 
+ * @returns {error} 500 - Internal Server Error
  */
 async function handlePost(req, res, next) {
-  try {
-    let record = await modelRepository.post(req.body);
-    res.status(201).send(record);
-  } catch (error) {
-    next(error);
-  }
+  let record = await modelRepository.post(req.body);
+  send(record, res, 201);
 }
 
 /**
- * Updates and sends back the new category via ID
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
+ * update a category
+ * @route PUT /category/{id}
+ * @param {category.model} id.path.required - id of the desired category
+ * @param {category.model} name.body.required - new name of the category
+ * @produces application/json application/xml
+ * @consumes application/json application/xml
+ * @returns {object} 200 - OK
+ * @returns {error} 500 - Internal Server Error
  */
 async function handlePut(req, res, next) {
   const record = await modelRepository.put(req.params.id, req.body);
-  sendRecord(record, req.params.id, res, next);
+  verifyExists(record, req.params.id);
+  send(record, res);
 }
 
 /**
- * This function comment is parsed by doctrine
- * @route DELETE /category/:id
- * 
- * @param {string} id.param.required - ID of the category to DELETE
- * @param {Response} res the Express Response
- * 
- * @returns {object} 200 - An object containing the information for the category
- * @returns {Error}  404 - Category with ID could not be found
- * @returns {Error}  500 - Unforseen consequences
+ * delete a category
+ * @route DELETE /category/{id}
+ * @param {category.model} id.path.required - id of the desired category
+ * @produces application/json application/xml
+ * @consumes application/json application/xml
+ * @returns {object} 200 - OK
+ * @returns {error} 500 - Internal Server Error
  */
 async function handleDelete(req, res, next) {
   let record = await modelRepository.delete(req.params.id);
-  sendRecord(record, req.params.id, res, next);
+  verifyExists(record, req.params.id);
+  send(record, res);
 }
 
 module.exports = router;

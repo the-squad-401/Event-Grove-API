@@ -5,7 +5,7 @@ const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 
 const TOKEN_EXPIRE = process.env.TOKEN_LIFETIME || '7d';
-const SECRET = process.env.SECRET || '+m#XfN>!\'#8CZ/Z-5_YbGUpM&`2{WY"&J:N&#\'-XvPy#L3<?KSz%8>)5DqsDpd-5';
+const SECRET = process.env.SECRET || '+m#XfN>!#8CZ/Z-5_YbGUpM&`2{WY"&J:N&#-XvPy#L3<?KSz%8>)5DqsDpd-5';
 
 
 const Users = mongoose.Schema({
