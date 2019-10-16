@@ -49,7 +49,7 @@ describe('Auth middleware', () => {
           authorization: 'Basic YWRtaW46cGFzc3dvcmQ=',
         },
       };
-      let res = {}
+      let res = {};
       let next = jest.fn();
       let middleware = auth;
 
@@ -72,7 +72,7 @@ describe('Auth middleware', () => {
       let middleware = auth;
 
       await middleware(req, res, next);
-      expect(next).toHaveBeenCalledWith({ status: 401, message: 'Invalid Login Credentials' })
+      expect(next).toHaveBeenCalledWith({ status: 401, message: 'Invalid Login Credentials' });
     });
 
     it('logs in with correct bearer token', async () => {
