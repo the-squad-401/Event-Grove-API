@@ -15,11 +15,11 @@ const categoryRouter = require('./routes/categories');
 const businessRouter = require('./routes/businesses');
 const subscriptionRouter = require('./routes/subscriptions');
 
-
 const app = express();
 
 //Swagger
 const expressSwagger = require('express-swagger-generator')(app);
+
 
 const options = {
   swaggerDefinition: {
@@ -48,6 +48,8 @@ const options = {
   files: ['./routes/**/*.js'], //Path to the API handle folder
 };
 expressSwagger(options),
+
+const app = express();
 
 //Run Middlewate
 app.use(cors());

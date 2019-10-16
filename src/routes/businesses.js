@@ -63,7 +63,7 @@ function send(record, res, status = 200) {
  * @route GET /businesses
  * @returns {object} 200 - An object containing each business, and count
  * @returns {Error} 500 - Unforseen difficulties.
- */
+*/
 async function getBusinesses(req, res) {
   const record = await businesses.get();
   send(record, res);
