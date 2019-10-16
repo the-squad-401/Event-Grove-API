@@ -1,4 +1,4 @@
-'use-strict';
+'use strict';
 
 const express = require('express');
 const router = express.Router();
@@ -60,9 +60,10 @@ function send(record, res, status = 200) {
 
 /**
  * Retrieves and sends back all the businesses
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
- */
+ * @route GET /businesses
+ * @returns {object} 200 - An object containing each business, and count
+ * @returns {Error} 500 - Unforseen difficulties.
+*/
 async function getBusinesses(req, res) {
   const record = await businesses.get();
   send(record, res);
@@ -70,8 +71,11 @@ async function getBusinesses(req, res) {
 
 /**
  * Retrieves and sends back a single business via ID
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
+ * @route GET /business
+ * @param {string} id.param.required - ID of the business to GET
+ * @returns {object} 200 - An object containing the information for the business
+ * @returns {Error}  404 - Business with ID could not be found
+ * @returns {Error}  500 - Unforseen consequences
  */
 async function getBusinessById(req, res) {
   const record = await businesses.get(req.params.id);
@@ -81,8 +85,10 @@ async function getBusinessById(req, res) {
 
 /**
  * Retrieves and sends back all the businesses in a certain category via ID
- * @param {Request} req the Express Request
- * @param {Response} res the Express Response
+ * @route GET /businesses/:id
+ * @param {string} id.param.required - ID of the category to GET businesses by
+ * @returns {object} 200 - An object containing each business
+ * @returns {Error}  500 - Unforseen consequences
  */
 async function getBusinessesByCategory(req, res) {
   const record = await businesses.getByCategory(req.params.category);
