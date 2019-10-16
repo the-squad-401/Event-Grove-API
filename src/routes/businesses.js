@@ -137,6 +137,14 @@ async function getBusinesses(req, res) {
   send(record, res);
 }
 
+/**
+ * Retrieves and sends back a single business via ID
+ * @route GET /business/{id}
+ * @param {string} id.path.required - ID of the business to GET
+ * @returns {object} 200 - An object containing the information for the business
+ * @returns {Error}  404 - Business with ID could not be found
+ * @returns {Error}  500 - Unforseen consequences
+ */
 async function getBusinessById(req, res) {
   const record = await businesses.get(req.params.id);
   verifyExists(record, req.params.id);
