@@ -18,6 +18,11 @@ const { wrap, get401, verifyExists, send } = require('../route-helpers');
  * @property {string} close.required - Closing time
  */
 
+ /**
+ * @typedef Owner
+ * @property {string} owner.required - User ID to be added as an owner
+ */
+
 /**
  * @typedef NewBusiness
  * @property {string} name.required - Business name
@@ -51,6 +56,7 @@ const { wrap, get401, verifyExists, send } = require('../route-helpers');
  * @returns {object} 200 - An object containing each business
  */
 router.get('/businesses', wrap(getBusinesses));
+
 /**
  * Retrieves and sends back all the businesses within in a certain category via ID
  * @route GET /businesses/{id}
@@ -58,6 +64,7 @@ router.get('/businesses', wrap(getBusinesses));
  * @returns {object} 200 - An object containing each business
  */
 router.get('/businesses/:category', wrap(getBusinessesByCategory));
+
 /**
  * Retrieves and sends back a single business via ID
  * @route GET /business/{id}
@@ -66,6 +73,7 @@ router.get('/businesses/:category', wrap(getBusinessesByCategory));
  * @returns {Error}  404 - Business with ID could not be found
  */
 router.get('/business/:id', wrap(getBusinessById));
+
 /**
  * Updates and sends back the new business via ID
  * @route PUT /business/{id}
@@ -76,6 +84,7 @@ router.get('/business/:id', wrap(getBusinessById));
  * @security Bearer
  */
 router.put('/business/:id', auth, wrap(updateBusinessById));
+
 /**
  * Creates and sends back a new business from JSON in the req.body
  * @route POST /business
@@ -85,6 +94,18 @@ router.put('/business/:id', auth, wrap(updateBusinessById));
  * @security Bearer
  */
 router.post('/business', auth, wrap(createBusiness));
+
+/**
+ * Adds a owner to a business
+ * @route POST /business/owner/{id}
+ * @param {string} id.path.required - ID of the business
+ * @param {Owner.model} owner.body.required - The id of the business owner
+ * @returns {Business.model} 200 - An object containing the updated information for the business
+ * @returns {Error}  404 - Unable to add owner
+ * @security Bearer
+ */
+router.post('/business/owner/:id', auth, wrap(addBusinessOwner));
+
 /**
  * Deletes and sends back, for the last time, a business via ID
  * @route DELETE /business/{id}
@@ -118,6 +139,14 @@ async function authOwner(req) {
   if (!business.owners.includes(tokenData.id) && tokenData.type !== 'admin') {
     throw get401();
   } 
+}
+
+async function addBusinessOwner(req, res) {
+  await authOwner(req);
+  let record = await businesses.get(req.params.id);
+  record.owners.push(req.body.owner);
+  record = await businesses.put(req.params.id, record);
+  send(record, res);
 }
 
 async function updateBusinessById(req, res) {
