@@ -36,7 +36,7 @@ const options = {
       'application/json',
       'application/xml',
     ],
-    schemes: ['https'],
+    schemes: ['https', 'http'],
     securityDefinitions: {
       JWT: {
         type: 'apiKey',
