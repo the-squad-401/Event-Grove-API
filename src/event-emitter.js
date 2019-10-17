@@ -2,10 +2,13 @@
 require('dotenv').config();
 
 const EMAIL_PROVIDER = process.env.EMAIL_PROVIDER || 'abc.123@xyz.com';
+const TEXT_PROVIDER = process.env.TEXT_PROVIDER || '3333333333';
 
 const sgMail = require('@sendgrid/mail');
+const twilio = require('twilio');
 
 sgMail.setApiKey(process.env.SENDGRID_API_KEY);
+const client = new twilio(process.env.TWILIO_ACCOUNT_SID, process.env.TWILIO_AUTH_TOKEN);
 
 const Categories = require('./models/category/category');
 const Businesses = require('./models/business/business');
@@ -42,12 +45,19 @@ function createEmail(user, event) {
     html: `${event.description}`,
   };
 }
-
+function createText(user,event){
+  return {
+    to: user.phone,
+    from: TEXT_PROVIDER,
+    body: `${event.description}`,
+  };
+}
 async function sendNotification(user, event) {
   console.log(await users.get());
   user = await users.get(user);
   console.log(user);
   sgMail.send(createEmail(user, event));
+  client.messages.create(createText(user, event)).then(console.log).catch(console.error);
 }
 
 module.exports = emitNotifications;

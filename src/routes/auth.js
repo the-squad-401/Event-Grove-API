@@ -40,7 +40,7 @@ authRouter.post('/signup', (req, res, next) => {
  * @route POST /signin
  * @returns {string} 200 - Bearer token used for authentication
  * @returns {string} 401 - Invalid Login Credentials
- * @security BASIC
+ * @security Basic
  */
 authRouter.post('/signin', auth, (req, res, next) => {
   res.cookie('auth', req.token);

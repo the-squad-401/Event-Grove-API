@@ -73,7 +73,7 @@ router.get('/business/:id', wrap(getBusinessById));
  * @param {object} update.body.required - The document updates
  * @returns {Business.model} 200 - An object containing the updated information for the business
  * @returns {Error}  404 - Business with ID could not be found
- * @security JWT
+ * @security Bearer
  */
 router.put('/business/:id', auth, wrap(updateBusinessById));
 /**
@@ -82,7 +82,7 @@ router.put('/business/:id', auth, wrap(updateBusinessById));
  * @param {NewBusiness.model} business.body.required - the business information
  * @returns {Business.model} 201 - An object containing the created business
  * @returns {Error} 500 - Business data was incorrect
- * @security JWT
+ * @security Bearer
  */
 router.post('/business', auth, wrap(createBusiness));
 /**
@@ -91,7 +91,7 @@ router.post('/business', auth, wrap(createBusiness));
  * @param {string} id.path.required - ID of the business to delete
  * @returns {Business.model} 200 - An object containing the deleted businesses information
  * @returns {Error}  404 - Business with ID could not be found
- * @security JWT
+ * @security Bearer
  */
 router.delete('/business/:id', auth, wrap(deleteBusiness));
 

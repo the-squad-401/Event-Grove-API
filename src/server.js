@@ -38,13 +38,13 @@ const options = {
     ],
     schemes: ['https', 'http'],
     securityDefinitions: {
-      JWT: {
+      Bearer: {
         type: 'apiKey',
         in: 'header',
         name: 'Authorization',
         description: 'JWT Bearer Token',
       },
-      BASIC: {
+      Basic: {
         type: 'basic',
         in: 'header',
         name: 'Authorization',
@@ -72,7 +72,7 @@ app.use(subscriptionRouter);
 app.use(authRouter);
 
 //Route to populate businesses in db, disabled 
-// app.get('/addbiz', require('../docs/mockBiz'));
+//app.get('/addbiz', require('../docs/mockBiz'));
 
 //Catchalls
 app.use(notFound);
