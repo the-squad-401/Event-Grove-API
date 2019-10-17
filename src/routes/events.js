@@ -10,6 +10,8 @@ const Events = require('../models/event/event');
 const Businesses = require('../models/business/business');
 const businesses = new Businesses();
 
+const { wrap, get401, verifyExists, send } = require('../route-helpers');
+
 const events = new Events();
 
 router.get('/events', wrap(getEvents));
@@ -29,51 +31,6 @@ router.delete('/events/:id', auth, wrap(deleteEvent));
  * @property {number} endDate.required - When the Event ends
  * @property {string} image.required - image of Event
  */
-
-/**
- * Wraps a route callback with a try/catch, which passes on uncaught errors to be properly handled
- * @param {Function} route the route to be wrapped
- */
-function wrap(route) {
-  return async (req, res, next) => {
-    try {
-      await route(req, res, next);
-    } catch (error) {
-      next(error);
-    }
-  };
-}
-
-/**
- * Creates an error with a 404 status
- * @param {String} id the id of the event that could not be found.
- */
-function get404(id) {
-  const error = new Error(`No event found with id: ${id}`);
-  error.status = 404;
-  return error;
-}
-
-/**
- * Checks if the record was found, and throws a 404 error if not
- * @param {Object} record the record to verify
- * @param {String} id the id of the record (for the 404)
- */
-function verifyExists(record, id) {
-  if (!record) {
-    throw get404(id);
-  }
-}
-
-/**
- * Sends a record to a response, with a default status of 200
- * @param {Object} record the record
- * @param {Response} res the Express Response
- * @param {Number} status a status code (200 by default)
- */
-function send(record, res, status = 200) {
-  res.status(status).json(record);
-}
 
 /**
  * Retrieves and sends back all events
@@ -109,14 +66,9 @@ async function getEventsByCategory(req, res) {
   send(record, res);
 }
 
-function get401() {
-  const error = new Error('You are not authorized to do this action');
-  error.status = 401;
-  return error;
-}
-
 async function authOwner(tokenData, businessId) {
   const business = await businesses.get(businessId);
+  verifyExists(business, businessId);
   if (!business.owners.includes(tokenData.id) && tokenData.type !== 'admin') {
     throw get401();
   } 
@@ -145,9 +97,9 @@ async function postEvent(req, res) {
  */
 async function updateEvent(req, res) {
   let record = await events.get(req.params.id);
+  verifyExists(record, req.params.id);
   await authOwner(jwt.decode(req.token), record.business);
   record = await events.put(req.params.id, req.body);
-  verifyExists(record, req.params.id);
   send(record, res);
 }
 
@@ -160,9 +112,9 @@ async function updateEvent(req, res) {
  */
 async function deleteEvent(req, res) {
   let record = await events.get(req.params.id);
+  verifyExists(record, req.params.id);
   await authOwner(jwt.decode(req.token), record.business);
   record = await events.delete(req.params.id);
-  verifyExists(record, req.params.id);
   send(record, res);
 }
 
