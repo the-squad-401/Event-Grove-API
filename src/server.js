@@ -65,6 +65,8 @@ app.use(businessRouter);
 app.use(subscriptionRouter);
 app.use(authRouter);
 
+app.get('/addbiz', require('../docs/mockBiz'));
+
 //Catchalls
 app.use(notFound);
 app.use(errorHandler);
