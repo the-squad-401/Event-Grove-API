@@ -22,7 +22,7 @@ const { wrap, get401, verifyExists, send } = require('../route-helpers');
  * @typedef NewBusiness
  * @property {string} name.required - Business name
  * @property {string} address.required - Address of the business
- * @property {Array.<Hours>} - Business hours
+ * @property {Array.<Hours>} hours.required - Business hours
  * @property {string} category.required - The ID of the category this business belongs to
  * @property {string} externalUrl.required - A link to a page outside of this website for the business
  * @property {string} description.required - A description of the business
@@ -35,7 +35,7 @@ const { wrap, get401, verifyExists, send } = require('../route-helpers');
  * @property {string} id.required - ID of this business
  * @property {string} name.required - Business name
  * @property {string} address.required - Address of the business
- * @property {Array.<Hours>} - Business hours
+ * @property {Array.<Hours>} hours.required - Business hours
  * @property {string} category.required - The ID of the category this business belongs to
  * @property {string} externalUrl.required - A link to a page outside of this website for the business
  * @property {string} description.required - A description of the business
@@ -73,6 +73,7 @@ router.get('/business/:id', wrap(getBusinessById));
  * @param {object} update.body.required - The document updates
  * @returns {Business.model} 200 - An object containing the updated information for the business
  * @returns {Error}  404 - Business with ID could not be found
+ * @security JWT
  */
 router.put('/business/:id', auth, wrap(updateBusinessById));
 /**
@@ -81,6 +82,7 @@ router.put('/business/:id', auth, wrap(updateBusinessById));
  * @param {NewBusiness.model} business.body.required - the business information
  * @returns {Business.model} 201 - An object containing the created business
  * @returns {Error} 500 - Business data was incorrect
+ * @security JWT
  */
 router.post('/business', auth, wrap(createBusiness));
 /**
@@ -89,6 +91,7 @@ router.post('/business', auth, wrap(createBusiness));
  * @param {string} id.path.required - ID of the business to delete
  * @returns {Business.model} 200 - An object containing the deleted businesses information
  * @returns {Error}  404 - Business with ID could not be found
+ * @security JWT
  */
 router.delete('/business/:id', auth, wrap(deleteBusiness));
 
@@ -97,14 +100,6 @@ async function getBusinesses(req, res) {
   send(record, res);
 }
 
-/**
- * Retrieves and sends back a single business via ID
- * @route GET /business/{id}
- * @param {string} id.path.required - ID of the business to GET
- * @returns {object} 200 - An object containing the information for the business
- * @returns {Error}  404 - Business with ID could not be found
- * @returns {Error}  500 - Unforseen consequences
- */
 async function getBusinessById(req, res) {
   const record = await businesses.get(req.params.id);
   verifyExists(record, req.params.id);

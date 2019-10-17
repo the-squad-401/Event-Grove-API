@@ -58,8 +58,8 @@ function getSubscribers(req, res, next) {
  * 
  * @param {string} type.path.required - business or category
  * @param {string} id.path.required - id of business or category
- * 
  * @param {string} userId.body.required - ID of user
+ * @security JWT
  */
 async function createSubscriber(req, res) {
   const { id } = jwt.decode(req.token);
@@ -79,8 +79,8 @@ async function createSubscriber(req, res) {
  * 
  * @param {string} type.path.required - business or category
  * @param {string} id.path.required - id of business or category
- * 
  * @param {string} userId.body.required - ID of user
+ * @security JWT
  */
 async function deleteSubscriber(req, res) {
   const { id } = jwt.decode(req.token);

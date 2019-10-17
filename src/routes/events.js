@@ -79,6 +79,7 @@ async function authOwner(tokenData, businessId) {
  * @route POST /event
  * @param {Event.model} event.body.required - creates a new event
  * @returns {Event.model} 200 - an event is created with the information submitted
+ * @security JWT
  */
 async function postEvent(req, res) {
   const tokenData = jwt.decode(req.token);
@@ -94,6 +95,7 @@ async function postEvent(req, res) {
  * @param {object} update.body.required - Updated info
  * @returns {Event.model} 200 - an object containing the information of the updated event
  * @returns {Error} 404 - event with ID could not be found 
+ * @security JWT
  */
 async function updateEvent(req, res) {
   let record = await events.get(req.params.id);
@@ -109,6 +111,7 @@ async function updateEvent(req, res) {
  * @param {string} id.path.required - ID of the event to DELETE
  * @returns {Event.model} 200 - an object no longer containing the information for an event
  * @returns {Error} 404 - event with ID could not be found
+ * @security JWT
  */
 async function deleteEvent(req, res) {
   let record = await events.get(req.params.id);
