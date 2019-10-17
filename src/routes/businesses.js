@@ -18,7 +18,7 @@ const { wrap, get401, verifyExists, send } = require('../route-helpers');
  * @property {string} close.required - Closing time
  */
 
- /**
+/**
  * @typedef Owner
  * @property {string} owner.required - User ID to be added as an owner
  */
