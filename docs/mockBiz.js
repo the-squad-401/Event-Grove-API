@@ -96,6 +96,7 @@ const store9 = {
   bannerImage:'img_987996654.jpg',
   gallery:'img_storefront.jpg, img_odindrinkingfromahorn.jpg',
 };
+
 const store10 = {
   name: 'Surf n Turf',
   address: '333 Food ct NE Cedar Rapids, IA',
@@ -271,4 +272,28 @@ const store25 = {
   bannerImage:'img_9879885251124521.jpg',
   gallery:'img_storefront.jpg, img_deepfriedgoodness.jpg',
 };
-//read up on swaggwer doc
+
+const businessArray = [store1,store2,store3,store4,store5,store6,store7,store8,store9,store10,store11,store12,store13,store14,store15,store16,store17,store18,store19,store20,store21,store22,store23,store24,store25];
+
+const catArray = ['services', 'dining', 'bar', 'entertainment', 'shopping'];
+
+module.exports = async (req, res) => {
+  const biz = require('../docs/mockBiz');
+  const Categories = require('../src/models/category/category');
+  const categories = new Categories();
+
+  const catMap = {};
+  for (const category of catArray) {
+    catMap[category] = await categories.post({
+      name: category,
+    });
+  }
+
+  const Businesses = require('../src/models/business/business');
+  const businesses = new Businesses();
+  for (const bidness of businessArray) {
+    bidness.category = catMap[bidness.category];
+    businesses.post(bidness);
+  }
+  res.send('It is done');
+};
