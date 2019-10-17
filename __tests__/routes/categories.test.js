@@ -12,7 +12,7 @@ const usersModel = new Users();
 
 
 
-let admin = {username: 'admin', password: 'password', email: 'admin@xyz.com', phone: '555-555-5555', usertype: 'admin'}
+let admin = {username: 'admin', password: 'password', email: 'admin@xyz.com', phone: '555-555-5555', usertype: 'admin'};
 
 beforeAll(async () => {
   let testCategory = await categories.post({
