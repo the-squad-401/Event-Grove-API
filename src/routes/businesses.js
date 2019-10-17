@@ -53,6 +53,7 @@ const { wrap, get401, verifyExists, send } = require('../route-helpers');
 /**
  * Retrieves and sends back all the businesses
  * @route GET /businesses
+ * @group Businesses
  * @returns {object} 200 - An object containing each business
  */
 router.get('/businesses', wrap(getBusinesses));
@@ -60,6 +61,7 @@ router.get('/businesses', wrap(getBusinesses));
 /**
  * Retrieves and sends back all the businesses within in a certain category via ID
  * @route GET /businesses/{id}
+ * @group Businesses
  * @param {string} id.path.required - ID of the category to GET businesses by
  * @returns {object} 200 - An object containing each business
  */
@@ -68,6 +70,7 @@ router.get('/businesses/:category', wrap(getBusinessesByCategory));
 /**
  * Retrieves and sends back a single business via ID
  * @route GET /business/{id}
+ * @group Businesses
  * @param {string} id.path.required - ID of the business to GET
  * @returns {Business.model} 200 - An object containing the information for the business
  * @returns {Error}  404 - Business with ID could not be found
@@ -77,6 +80,7 @@ router.get('/business/:id', wrap(getBusinessById));
 /**
  * Updates and sends back the new business via ID
  * @route PUT /business/{id}
+ * @group Businesses
  * @param {string} id.path.required - ID of the business to PUT
  * @param {object.model} update.body.required - The document updates
  * @returns {Business.model} 200 - An object containing the updated information for the business
@@ -88,6 +92,7 @@ router.put('/business/:id', auth, wrap(updateBusinessById));
 /**
  * Creates and sends back a new business from JSON in the req.body
  * @route POST /business
+ * @group Businesses
  * @param {NewBusiness.model} business.body.required - the business information
  * @returns {Business.model} 201 - An object containing the created business
  * @returns {Error} 500 - Business data was incorrect
@@ -98,6 +103,7 @@ router.post('/business', auth, wrap(createBusiness));
 /**
  * Adds a owner to a business
  * @route POST /business/owner/{id}
+ * @group Businesses
  * @param {string} id.path.required - ID of the business
  * @param {Owner.model} owner.body.required - The id of the business owner
  * @returns {Business.model} 200 - An object containing the updated information for the business
@@ -109,6 +115,7 @@ router.post('/business/owner/:id', auth, wrap(addBusinessOwner));
 /**
  * Deletes and sends back, for the last time, a business via ID
  * @route DELETE /business/{id}
+ * @group Businesses
  * @param {string} id.path.required - ID of the business to delete
  * @returns {Business.model} 200 - An object containing the deleted businesses information
  * @returns {Error}  404 - Business with ID could not be found

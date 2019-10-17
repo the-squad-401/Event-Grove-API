@@ -23,6 +23,7 @@ router.delete('/category/:id', auth, wrap(handleDelete));
 /**
  * get all categories
  * @route get /categories
+ * @group Categories
  * @produces application/json application/xml
  * @consumes application/json application/xml
  * @returns {object} 200 - OK 
@@ -36,6 +37,7 @@ async function handleGet(req, res) {
 /**
  * post a new category
  * @route POST /category
+ * @group Categories
  * @param {category.model} name.body.required - name of the category
  * @produces application/json application/xml
  * @consumes application/json application/xml
@@ -52,6 +54,7 @@ async function handlePost(req, res) {
 /**
  * update a category
  * @route PUT /category/{id}
+ * @group Categories
  * @param {category.model} id.path.required - id of the desired category
  * @param {category.model} name.body.required - new name of the category
  * @produces application/json application/xml
@@ -70,6 +73,7 @@ async function handlePut(req, res) {
 /**
  * delete a category
  * @route DELETE /category/{id}
+ * @group Categories
  * @param {category.model} id.path.required - id of the desired category
  * @produces application/json application/xml
  * @consumes application/json application/xml
