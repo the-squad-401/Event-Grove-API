@@ -47,4 +47,16 @@ authRouter.post('/signin', auth, (req, res, next) => {
   res.send(req.token);
 });
 
+/**
+ * Gets info about your user
+ * @route GET /user
+ * @returns {object} 200 - Info about your user
+ * @returns {string} 401 - Invalid Login Credentials
+ * @security Bearer
+ */
+authRouter.get('/user', auth, (req, res) => {
+  res.cookie('auth', req.token);
+  res.send(req.user);
+});
+
 module.exports = authRouter;

@@ -23,7 +23,7 @@ async function emitNotifications(event) {
   const business = await businesses.get(event.business);
   const category = await categories.get(event.category);
   const visited = {};
-
+  console.log('Doing emit');
   for (const userId of business.subscribers) {
     sendNotification(userId, event);
     visited[userId] = true;

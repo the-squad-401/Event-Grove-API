@@ -70,7 +70,7 @@ router.get('/business/:id', wrap(getBusinessById));
  * Updates and sends back the new business via ID
  * @route PUT /business/{id}
  * @param {string} id.path.required - ID of the business to PUT
- * @param {object} update.body.required - The document updates
+ * @param {object.model} update.body.required - The document updates
  * @returns {Business.model} 200 - An object containing the updated information for the business
  * @returns {Error}  404 - Business with ID could not be found
  * @security Bearer
