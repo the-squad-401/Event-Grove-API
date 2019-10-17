@@ -65,7 +65,8 @@ app.use(businessRouter);
 app.use(subscriptionRouter);
 app.use(authRouter);
 
-app.get('/addbiz', require('../docs/mockBiz'));
+//Route to populate businesses in db, disabled 
+// app.get('/addbiz', require('../docs/mockBiz'));
 
 //Catchalls
 app.use(notFound);
