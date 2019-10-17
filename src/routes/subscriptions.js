@@ -16,7 +16,7 @@ router.delete('/subscribers/:type/:id', auth, deleteSubscriber);
 
 /**
 * @typedef subscribers
-* @property {Array.<object>} object
+* @property {Array.<string>} object
 */
 
 /**
@@ -61,9 +61,8 @@ function getSubscribers(req, res, next) {
  * 
  * @param {string} userId.body.required - ID of user
  */
-async function createSubscriber(req, res, next) {
+async function createSubscriber(req, res) {
   const { id } = jwt.decode(req.token);
-  console.log(id);
   if (req.params.type === 'business') {
     let result = await businesses.addSubscriber(req.params.id, id);
     res.status(201).json(result.subscribers);
@@ -83,9 +82,8 @@ async function createSubscriber(req, res, next) {
  * 
  * @param {string} userId.body.required - ID of user
  */
-async function deleteSubscriber(req, res, next) {
+async function deleteSubscriber(req, res) {
   const { id } = jwt.decode(req.token);
-  console.log(id);
   if (req.params.type === 'business') {
     let result = await businesses.removeSubscriber(req.params.id, id);
     res.status(200).json(result.subscribers);

@@ -9,6 +9,8 @@ const auth = require('../auth/auth-middleware');
 const Businesses = require('../models/business/business');
 const businesses = new Businesses();
 
+const { wrap, get401, verifyExists, send } = require('../route-helpers');
+
 /**
  * @typedef Hours
  * @property {string} day.required - Day(s) for these hours
@@ -90,57 +92,6 @@ router.post('/business', auth, wrap(createBusiness));
  */
 router.delete('/business/:id', auth, wrap(deleteBusiness));
 
-/**
- * Wraps a route callback with a try/catch, which passes on uncaught errors to be properly handled
- * @param {Function} route the route to be wrapped
- */
-function wrap(route) {
-  return async (req, res, next) => {
-    try {
-      await route(req, res, next);
-    } catch (error) {
-      next(error);
-    }
-  };
-}
-
-/**
- * Creates an error with a 404 status
- * @param {String} id the id of the business that could not be found.
- */
-function get404(id) {
-  const error = new Error(`No business found with id: ${id}`);
-  error.status = 404;
-  return error;
-}
-
-function get401() {
-  const error = new Error('You are not authorized to do this action');
-  error.status = 401;
-  return error;
-}
-
-/**
- * Checks if the record was found, and throws a 404 error if not
- * @param {Object} record the record to verify
- * @param {String} id the id of the record (for the 404)
- */
-function verifyExists(record, id) {
-  if (!record) {
-    throw get404(id);
-  }
-}
-
-/**
- * Sends a record to a response, with a default status of 200
- * @param {Object} record the record
- * @param {Response} res the Express Response
- * @param {Number} status a status code (200 by default)
- */
-function send(record, res, status = 200) {
-  res.status(status).json(record);
-}
-
 async function getBusinesses(req, res) {
   const record = await businesses.get();
   send(record, res);
@@ -167,6 +118,7 @@ async function getBusinessesByCategory(req, res) {
 
 async function authOwner(req) {
   const business = await businesses.get(req.params.id);
+  verifyExists(business, req.params.id);
   const tokenData = jwt.decode(req.token);
   if (!business.owners.includes(tokenData.id) && tokenData.type !== 'admin') {
     throw get401();
