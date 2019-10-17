@@ -41,6 +41,7 @@ async function handleGet(req, res) {
  * @consumes application/json application/xml
  * @returns {object} 201 - category created 
  * @returns {error} 500 - Internal Server Error
+ * @security JWT
  */
 async function handlePost(req, res) {
   verifyAdmin(req);
@@ -57,6 +58,7 @@ async function handlePost(req, res) {
  * @consumes application/json application/xml
  * @returns {object} 200 - OK
  * @returns {error} 500 - Internal Server Error
+ * @security JWT
  */
 async function handlePut(req, res) {
   verifyAdmin(req);
@@ -73,6 +75,7 @@ async function handlePut(req, res) {
  * @consumes application/json application/xml
  * @returns {object} 200 - OK
  * @returns {error} 500 - Internal Server Error
+ * @security JWT
  */
 async function handleDelete(req, res) {
   verifyAdmin(req);
