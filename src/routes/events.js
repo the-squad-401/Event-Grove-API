@@ -37,6 +37,7 @@ router.delete('/events/:id', auth, wrap(deleteEvent));
 /**
  * Retrieves and sends back all events
  * @route GET /events
+ * @group Events
  * @returns {object} 200 - An object containing each event
  */
 async function getEvents(req, res) {
@@ -47,6 +48,7 @@ async function getEvents(req, res) {
 /**
  * Retrieves and sends back a single event via ID
  * @route GET /events/{id}
+ * @group Events
  * @param {string} id.path.required - ID of event to GET
  * @returns {Event.model} 200 - an object containing the information of an event.
  * @returns {Error} 404 - event with ID could not be found.
@@ -59,7 +61,8 @@ async function getEventById(req, res) {
 
 /**
  * Retrieves and sends back all the events in a certain category via ID
- * @route GET /events/{category} 
+ * @route GET /events/{category}
+ * @group Events
  * @param {string} category.path.required - Category ID of event to GET
  * @returns {object} 200 - an object containing the information of an event within a category.
  */
@@ -79,6 +82,7 @@ async function authOwner(tokenData, businessId) {
 /**
  * Creates and sends back a new event from JSON in the req.body
  * @route POST /events
+ * @group Events
  * @param {Event.model} event.body.required - creates a new event
  * @returns {Event.model} 200 - an event is created with the information submitted
  * @security Bearer
@@ -94,6 +98,7 @@ async function postEvent(req, res) {
 /**
  * Updates and sends back the new event via ID
  * @route PUT /events/{id}
+ * @group Events
  * @param {string} id.path.required - ID of the event to PUT
  * @param {object} update.body.required - Updated info
  * @returns {Event.model} 200 - an object containing the information of the updated event
@@ -111,6 +116,7 @@ async function updateEvent(req, res) {
 /**
  * Deletes and sends back, for the last time, a event via ID
  * @route DELETE /events/{id}
+ * @group Events
  * @param {string} id.path.required - ID of the event to DELETE
  * @returns {Event.model} 200 - an object no longer containing the information for an event
  * @returns {Error} 404 - event with ID could not be found

@@ -23,7 +23,6 @@ async function emitNotifications(event) {
   const business = await businesses.get(event.business);
   const category = await categories.get(event.category);
   const visited = {};
-  console.log('Doing emit');
   for (const userId of business.subscribers) {
     sendNotification(userId, event);
     visited[userId] = true;
@@ -37,7 +36,6 @@ async function emitNotifications(event) {
 }
 
 function createEmail(user, event) {
-  console.log(user.email);
   return {
     to: user.email,
     from: EMAIL_PROVIDER,
@@ -53,9 +51,7 @@ function createText(user,event){
   };
 }
 async function sendNotification(user, event) {
-  console.log(await users.get());
   user = await users.get(user);
-  console.log(user);
   sgMail.send(createEmail(user, event));
   client.messages.create(createText(user, event)).then(console.log).catch(console.error);
 }

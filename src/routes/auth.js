@@ -18,6 +18,7 @@ const auth = require('../auth/auth-middleware');
 /**
  * Creates a new user
  * @route POST /signup
+ * @group Authorization
  * @param {NewUser.model} user.body.required - The user information
  * @returns {string} 200 - Bearer token used for authentication
  * @returns {Error} 500 - Error signing up
@@ -38,6 +39,7 @@ authRouter.post('/signup', (req, res, next) => {
 /**
  * Logs in an existing user
  * @route POST /signin
+ * @group Authorization
  * @returns {string} 200 - Bearer token used for authentication
  * @returns {string} 401 - Invalid Login Credentials
  * @security Basic
@@ -50,6 +52,7 @@ authRouter.post('/signin', auth, (req, res, next) => {
 /**
  * Gets info about your user
  * @route GET /user
+ * @group Authorization
  * @returns {object} 200 - Info about your user
  * @returns {string} 401 - Invalid Login Credentials
  * @security Bearer

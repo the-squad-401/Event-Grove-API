@@ -27,7 +27,7 @@ router.delete('/subscribers/:type/:id', auth, deleteSubscriber);
 /**
  * Retrieves and sends back all subscribers
  * @route GET /subscribers/{type}/{id}
- * 
+ * @group Subscriptions
  * @param {string} type.path.required - business or category
  * @param {string} id.path.required - id of business or category
  * 
@@ -55,7 +55,7 @@ function getSubscribers(req, res, next) {
 /**
  * Creates and sends back a new subscriber from JSON in the req.body for either a business or category
  * @route POST /subscribers/{type}/{id}
- * 
+ * @group Subscriptions
  * @param {string} type.path.required - business or category
  * @param {string} id.path.required - id of business or category
  * @security Bearer
@@ -75,7 +75,7 @@ async function createSubscriber(req, res) {
 /**
  * Creates and sends back a new subscriber from JSON in the req.body for either a business or category
  * @route DELETE /subscribers/{type}/{id}
- * 
+ * @group Subscriptions
  * @param {string} type.path.required - business or category
  * @param {string} id.path.required - id of business or category
  * @security Bearer
