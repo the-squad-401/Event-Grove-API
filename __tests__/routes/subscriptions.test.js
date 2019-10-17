@@ -23,18 +23,21 @@ beforeAll(async () => {
     password: 'password', 
     email: 'jacob.wendt@yahoo.com',
     phone: '319-693-9955',
+    usertype:'admin',
   });
   mockUser2 = await users.post({
     username: 'kevin8684', 
     password: 'password', 
     email: 'kevin.kent@yahoo.com', 
     phone: '319-983-9755',
+    usertype:'user',
   });
   mockUser3 = await users.post({
     username: 'sally4868', 
     password: 'password', 
     email: 'sally.salmon@yahoo.com', 
     phone: '319-793-9865',
+    usertype:'admin',
   });
   mockCategory = await categories.post({
     name: 'Test Category',
@@ -78,7 +81,7 @@ describe('API', () => {
   it('can add a new subscriber to a business', async () => {
     await mockRequest
       .post(`/subscribers/business/${mockBusiness._id}`)
-      .send({ userId: mockUser3._id})
+      .set('Authorization', `Bearer ${mockUser3.generateToken()}`)
       .expect(201)
       .expect(JSON.stringify([mockUser._id, mockUser2._id,  mockUser3._id]));
   });
@@ -86,7 +89,7 @@ describe('API', () => {
   it('can add a new subscriber to a category', async () => {
     await mockRequest
       .post(`/subscribers/category/${mockCategory._id}`)
-      .send({ userId: mockUser3._id})
+      .set('Authorization', `Bearer ${mockUser3.generateToken()}`)
       .expect(201)
       .expect(JSON.stringify([mockUser._id, mockUser2._id, mockUser3._id]));
   });
@@ -94,7 +97,7 @@ describe('API', () => {
   it('can remove a subscriber from a business', async () => {
     await mockRequest 
       .delete(`/subscribers/business/${mockBusiness._id}`)
-      .send({ userId: mockUser3._id })
+      .set('Authorization', `Bearer ${mockUser3.generateToken()}`)
       .expect(200)
       .expect(JSON.stringify([mockUser._id, mockUser2._id]));
   });
@@ -102,7 +105,7 @@ describe('API', () => {
   it('can remove a subscriber from a category', async () => {
     await mockRequest 
       .delete(`/subscribers/category/${mockCategory._id}`)
-      .send({ userId: mockUser3._id })
+      .set('Authorization', `Bearer ${mockUser3.generateToken()}`)
       .expect(200)
       .expect(JSON.stringify([mockUser._id, mockUser2._id]));
   });

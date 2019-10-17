@@ -20,6 +20,7 @@ const app = express();
 
 //Swagger
 const expressSwagger = require('express-swagger-generator')(app);
+const URL = process.env.DEPLOY_URL || 'localhost:3000';
 
 
 const options = {
@@ -29,7 +30,7 @@ const options = {
       title: 'Event Grove',
       version: '1.0.0',
     },
-    host: `localhost:3000`,
+    host: URL,
     basePath: '/',
     produces: [
       'application/json',
@@ -64,7 +65,8 @@ app.use(businessRouter);
 app.use(subscriptionRouter);
 app.use(authRouter);
 
-app.get('/addbiz', require('../docs/mockBiz'));
+//Route to populate businesses in db, disabled 
+// app.get('/addbiz', require('../docs/mockBiz'));
 
 //Catchalls
 app.use(notFound);
