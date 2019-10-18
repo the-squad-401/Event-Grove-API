@@ -37,7 +37,7 @@ describe('Auth middleware', () => {
       return middleware(req, res, next)
         .then(() => {
           expect(401);
-        }).catch(console.error);
+        });
         
     });
 
