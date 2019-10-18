@@ -10,30 +10,6 @@ const modelRepository = new Model();
 
 const { wrap, get401, verifyExists, send } = require('../route-helpers');
 
-router.get('/categories', wrap(handleGet));
-router.post('/category', auth, wrap(handlePost));
-router.put('/category/:id', auth, wrap(handlePut));
-router.delete('/category/:id', auth, wrap(handleDelete));
-
-/**
-* @typedef category
-* @property {string} name.required - name of the category
-*/
-
-/**
- * get all categories
- * @route get /categories
- * @group Categories
- * @produces application/json application/xml
- * @consumes application/json application/xml
- * @returns {object} 200 - OK 
- * @returns {error} 500 - Internal Server Error
- */
-async function handleGet(req, res) {
-  let record = await modelRepository.get();
-  send(record, res);
-}
-
 /**
  * post a new category
  * @route POST /category
@@ -45,11 +21,18 @@ async function handleGet(req, res) {
  * @returns {error} 500 - Internal Server Error
  * @security Bearer
  */
-async function handlePost(req, res) {
-  verifyAdmin(req);
-  let record = await modelRepository.post(req.body);
-  send(record, res, 201);
-}
+router.post('/category', auth, wrap(handlePost));
+
+/**
+ * get all categories
+ * @route get /categories
+ * @group Categories
+ * @produces application/json application/xml
+ * @consumes application/json application/xml
+ * @returns {object} 200 - OK 
+ * @returns {error} 500 - Internal Server Error
+ */
+router.get('/categories', wrap(handleGet));
 
 /**
  * update a category
@@ -63,12 +46,7 @@ async function handlePost(req, res) {
  * @returns {error} 500 - Internal Server Error
  * @security Bearer
  */
-async function handlePut(req, res) {
-  verifyAdmin(req);
-  const record = await modelRepository.put(req.params.id, req.body);
-  verifyExists(record, req.params.id);
-  send(record, res);
-}
+router.put('/category/:id', auth, wrap(handlePut));
 
 /**
  * delete a category
@@ -81,6 +59,31 @@ async function handlePut(req, res) {
  * @returns {error} 500 - Internal Server Error
  * @security Bearer
  */
+router.delete('/category/:id', auth, wrap(handleDelete));
+
+/**
+* @typedef category
+* @property {string} name.required - name of the category
+*/
+
+async function handleGet(req, res) {
+  let record = await modelRepository.get();
+  send(record, res);
+}
+
+async function handlePost(req, res) {
+  verifyAdmin(req);
+  let record = await modelRepository.post(req.body);
+  send(record, res, 201);
+}
+
+async function handlePut(req, res) {
+  verifyAdmin(req);
+  const record = await modelRepository.put(req.params.id, req.body);
+  verifyExists(record, req.params.id);
+  send(record, res);
+}
+
 async function handleDelete(req, res) {
   verifyAdmin(req);
   let record = await modelRepository.delete(req.params.id);

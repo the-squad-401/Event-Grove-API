@@ -51,6 +51,29 @@ const { wrap, get401, verifyExists, send } = require('../route-helpers');
  */
 
 /**
+ * Creates and sends back a new business from JSON in the req.body
+ * @route POST /business
+ * @group Businesses
+ * @param {NewBusiness.model} business.body.required - the business information
+ * @returns {Business.model} 201 - An object containing the created business
+ * @returns {Error} 500 - Business data was incorrect
+ * @security Bearer
+ */
+router.post('/business', auth, wrap(createBusiness));
+
+/**
+ * Adds a owner to a business
+ * @route POST /business/owner/{id}
+ * @group Businesses
+ * @param {string} id.path.required - ID of the business
+ * @param {Owner.model} owner.body.required - The id of the business owner
+ * @returns {Business.model} 200 - An object containing the updated information for the business
+ * @returns {Error}  404 - Unable to add owner
+ * @security Bearer
+ */
+router.post('/business/owner/:id', auth, wrap(addBusinessOwner));
+
+/**
  * Retrieves and sends back all the businesses
  * @route GET /businesses
  * @group Businesses
@@ -90,29 +113,6 @@ router.get('/business/:id', wrap(getBusinessById));
 router.put('/business/:id', auth, wrap(updateBusinessById));
 
 /**
- * Creates and sends back a new business from JSON in the req.body
- * @route POST /business
- * @group Businesses
- * @param {NewBusiness.model} business.body.required - the business information
- * @returns {Business.model} 201 - An object containing the created business
- * @returns {Error} 500 - Business data was incorrect
- * @security Bearer
- */
-router.post('/business', auth, wrap(createBusiness));
-
-/**
- * Adds a owner to a business
- * @route POST /business/owner/{id}
- * @group Businesses
- * @param {string} id.path.required - ID of the business
- * @param {Owner.model} owner.body.required - The id of the business owner
- * @returns {Business.model} 200 - An object containing the updated information for the business
- * @returns {Error}  404 - Unable to add owner
- * @security Bearer
- */
-router.post('/business/owner/:id', auth, wrap(addBusinessOwner));
-
-/**
  * Deletes and sends back, for the last time, a business via ID
  * @route DELETE /business/{id}
  * @group Businesses
@@ -150,17 +150,12 @@ async function authOwner(req) {
 
 async function addBusinessOwner(req, res) {
   await authOwner(req);
-  let record = await businesses.get(req.params.id);
-  record.owners.push(req.body.owner);
-  record = await businesses.put(req.params.id, record);
-  send(record, res);
+  send(await businesses.addOwner(req.params.id, req.body.owner), res);
 }
 
 async function updateBusinessById(req, res) {
   await authOwner(req);
-  const record = await businesses.put(req.params.id, req.body);
-  verifyExists(record, req.params.id);
-  send(record, res);
+  send(await businesses.put(req.params.id, req.body), res);
 }
 
 async function createBusiness(req, res) {
@@ -174,9 +169,7 @@ async function createBusiness(req, res) {
 
 async function deleteBusiness(req, res) {
   await authOwner(req);
-  const record = await businesses.delete(req.params.id);
-  verifyExists(record, req.params.id);
-  send(record, res);
+  send(await businesses.delete(req.params.id), res);
 }
 
 module.exports = router;

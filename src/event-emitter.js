@@ -21,7 +21,7 @@ const users = new Users();
 
 async function emitNotifications(event) {
   const business = await businesses.get(event.business);
-  const category = await categories.get(event.category);
+  const category = await categories.get(business.category);
   const visited = {};
   for (const userId of business.subscribers) {
     sendNotification(userId, event);
@@ -53,7 +53,7 @@ function createText(user,event){
 async function sendNotification(user, event) {
   user = await users.get(user);
   sgMail.send(createEmail(user, event));
-  client.messages.create(createText(user, event)).then(console.log).catch(console.error);
+  client.messages.create(createText(user, event)).catch(console.error);
 }
 
 module.exports = emitNotifications;

@@ -16,7 +16,6 @@ module.exports = (req, res, next) => {
       return _authError();
     }
   } catch (error) {
-    console.error(error);
     return _authError(error);
   }
 

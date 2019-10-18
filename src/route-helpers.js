@@ -16,10 +16,10 @@ function wrap(route) {
 
 /**
  * Creates an error with a 404 status
- * @param {String} id the id of the business that could not be found.
+ * @param {String} id the id of the record that could not be found.
  */
 function get404(id) {
-  const error = new Error(`No business found with id: ${id}`);
+  const error = new Error(`No record found with id: ${id}`);
   error.status = 404;
   return error;
 }
