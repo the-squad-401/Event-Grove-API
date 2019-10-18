@@ -25,6 +25,26 @@ router.delete('/subscribers/:type/:id', auth, deleteSubscriber);
  */
 
 /**
+ * Creates and sends back a new subscriber from JSON in the req.body for either a business or category
+ * @route POST /subscribers/{type}/{id}
+ * @group Subscriptions
+ * @param {string} type.path.required - business or category
+ * @param {string} id.path.required - id of business or category
+ * @security Bearer
+ */
+async function createSubscriber(req, res) {
+  const { id } = jwt.decode(req.token);
+  if (req.params.type === 'business') {
+    let result = await businesses.addSubscriber(req.params.id, id);
+    res.status(201).json(result.subscribers);
+  }
+  if (req.params.type === 'category') {
+    let result = await categories.addSubscriber(req.params.id, id);
+    res.status(201).json(result.subscribers);
+  }
+}
+
+/**
  * Retrieves and sends back all subscribers
  * @route GET /subscribers/{type}/{id}
  * @group Subscriptions
@@ -49,26 +69,6 @@ function getSubscribers(req, res, next) {
         res.status(200).json(data.subscribers);
       })
       .catch(next);
-  }
-}
-
-/**
- * Creates and sends back a new subscriber from JSON in the req.body for either a business or category
- * @route POST /subscribers/{type}/{id}
- * @group Subscriptions
- * @param {string} type.path.required - business or category
- * @param {string} id.path.required - id of business or category
- * @security Bearer
- */
-async function createSubscriber(req, res) {
-  const { id } = jwt.decode(req.token);
-  if (req.params.type === 'business') {
-    let result = await businesses.addSubscriber(req.params.id, id);
-    res.status(201).json(result.subscribers);
-  }
-  if (req.params.type === 'category') {
-    let result = await categories.addSubscriber(req.params.id, id);
-    res.status(201).json(result.subscribers);
   }
 }
 
