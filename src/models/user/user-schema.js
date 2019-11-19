@@ -14,6 +14,7 @@ const Users = mongoose.Schema({
   email: { type: String, required: true },
   phone: { type: String, required: true },
   usertype: { type: String, required: true, enum: ['user', 'admin'], default: 'user'},
+  subscriptions: { type: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Businesses' }], default: [] },
 });
 
 Users.pre('save', async function() {
