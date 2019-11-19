@@ -83,7 +83,7 @@ describe('API', () => {
       .post(`/subscribers/business/${mockBusiness._id}`)
       .set('Authorization', `Bearer ${mockUser3.generateToken()}`)
       .expect(201)
-      .expect(JSON.stringify([mockUser._id, mockUser2._id,  mockUser3._id]));
+      .expect(JSON.stringify([mockBusiness._id]));
   });
 
   it('can add a new subscriber to a category', async () => {
@@ -99,7 +99,7 @@ describe('API', () => {
       .delete(`/subscribers/business/${mockBusiness._id}`)
       .set('Authorization', `Bearer ${mockUser3.generateToken()}`)
       .expect(200)
-      .expect(JSON.stringify([mockUser._id, mockUser2._id]));
+      .expect(JSON.stringify([]));
   });
 
   it('can remove a subscriber from a category', async () => {

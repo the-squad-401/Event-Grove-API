@@ -9,6 +9,8 @@ const Businesses = require('../models/business/business');
 const businesses = new Businesses();
 const Categories = require('../models/category/category');
 const categories = new Categories();
+const Users = require('../models/user/user');
+const users = new Users();
 
 router.get('/subscribers/:type/:id', getSubscribers);
 router.post('/subscribers/:type/:id', auth, createSubscriber);
@@ -35,8 +37,9 @@ router.delete('/subscribers/:type/:id', auth, deleteSubscriber);
 async function createSubscriber(req, res) {
   const { id } = jwt.decode(req.token);
   if (req.params.type === 'business') {
-    let result = await businesses.addSubscriber(req.params.id, id);
-    res.status(201).json(result.subscribers);
+    let result = await users.addSubscription(id, req.params.id);
+    await businesses.addSubscriber(req.params.id, id);
+    res.status(201).json(result.subscriptions);
   }
   if (req.params.type === 'category') {
     let result = await categories.addSubscriber(req.params.id, id);
@@ -83,8 +86,9 @@ function getSubscribers(req, res, next) {
 async function deleteSubscriber(req, res) {
   const { id } = jwt.decode(req.token);
   if (req.params.type === 'business') {
-    let result = await businesses.removeSubscriber(req.params.id, id);
-    res.status(200).json(result.subscribers);
+    let result = await users.removeSubscription(id, req.params.id);
+    await businesses.removeSubscriber(req.params.id, id);
+    res.status(200).json(result.subscriptions);
   }
   if (req.params.type === 'category') {
     let result = await categories.removeSubscriber(req.params.id, id);
