@@ -18,6 +18,14 @@ class Events extends Model {
   async getByCategory(categoryId) {
     return await this.schema.find({category: categoryId});
   }
+
+  /**
+   * Gets all events sharing a business ID
+   * @param {String} businessId
+   */
+  async getByBusiness(businessId) {
+    return await this.schema.find({business: businessId});
+  }
 }
 
 module.exports = exports = Events;
