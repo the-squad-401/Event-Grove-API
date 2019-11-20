@@ -65,6 +65,15 @@ router.get('/events/:id', wrap(getEventById));
 router.get('/events/:category', wrap(getEventsByCategory));
 
 /**
+ * Retrieves and sends back all the events in a certain business via ID
+ * @route GET /events/business/{id}
+ * @group Events
+ * @param {string} id.path.required - Business ID of events to GET
+ * @returns {object} 200 - an object containing the information of events within a business.
+ */
+router.get('/events/business/:business', wrap(getEventsByBusiness));
+
+/**
  * Updates and sends back the new event via ID
  * @route PUT /events/{id}
  * @group Events
@@ -100,6 +109,11 @@ async function getEventById(req, res) {
 
 async function getEventsByCategory(req, res) {
   const record = await events.getByCategory(req.params.category);
+  send(record, res);
+}
+
+async function getEventsByBusiness(req, res) {
+  const record = await events.getByBusiness(req.params.business);
   send(record, res);
 }
 
