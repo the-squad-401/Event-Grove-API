@@ -430,246 +430,219 @@ const event48 = {
   image: '',
 };
 
-const event49 = {
-  business: 'Very Good Construction',
-  category: 'Services',
-  description: '',
-  startDate: ,
-  endDate: ,
-  image: '',
-};
-
 const event50 = {
   business: 'Very Good Construction',
   category: 'Services',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'You\'re on with Ron first podcast',
+  startDate: 1575093600000,
+  endDate: 1575093600000,
   image: '',
 };
 
 const event51 = {
   business: 'Very Good Construction',
   category: 'Services',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Ron Swanson\'s talk on why government shouldn\'t exist this Sunday.',
+  startDate: 1574611200000,
+  endDate: 1574618400000,
   image: '',
 };
 
 const event52 = {
   business: 'Newish DarkBlue',
   category: 'Shopping',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Clearance on all summer items!',
+  startDate: 1571547600000,
+  endDate: 1574402400000,
   image: '',
 };
 
 const event53 = {
   business: 'Newish DarkBlue',
   category: 'Shopping',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Bring in a toy for this years toy-drive and get another 15% off your purchase',
+  startDate: 1573365600000,
+  endDate: 1577167200000,
   image: '',
 };
 
 const event54 = {
   business: 'Newish DarkBlue',
   category: 'Shopping',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: '20% off your entire purchase this Saturday.',
+  startDate: 1574488800000,
+  endDate: 1574488800000,
   image: '',
 };
 
 const event55 = {
   business: 'Pizza Kings',
   category: 'Dining',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Get a free Cheese bread with any carry out order over $25!',
+  startDate: 1546322400000,
+  endDate: 1577858400000,
   image: '',
 };
 
 const event56 = {
   business: 'Pizza Kings',
   category: 'Dining',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Get a free beer with purchase of any large pizza!',
+  startDate: 1572584400000,
+  endDate: 1577858400000,
   image: '',
 };
 
 const event57 = {
   business: 'Pizza Kings',
   category: 'Dining',
-  description: '',
-  startDate: ,
-  endDate: ,
-  image: '',
-};
-
-const event58 = {
-  business: 'The LifeCycle',
-  category: 'Bar',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Get two medium specialty pizzas for $8 each through November!',
+  startDate: 1572584400000,
+  endDate: 1575093600000,
   image: '',
 };
 
 const event59 = {
   business: 'The LifeCycle',
   category: 'Bar',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Pre-winter ride! Make sure to bundle up for the ride through Cedar Rapids. Half price drinks the rest of the night.',
+  startDate: 1577721600000,
+  endDate: 1577768400000,
   image: '',
 };
 
 const event60 = {
   business: 'The LifeCycle',
   category: 'Bar',
-  description: '',
-  startDate: ,
-  endDate: ,
-  image: '',
-};
-
-const event61 = {
-  business: 'Downtown Theater Group',
-  category: 'Entertainment',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: '1/2 price apps during happy hour.',
+  startDate: 1561438800000,
+  endDate: 1608876000000,
   image: '',
 };
 
 const event62 = {
   business: 'Downtown Theater Group',
   category: 'Entertainment',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Kids Theatre this weekend!',
+  startDate: 1574488800000,
+  endDate: 1574661600000,
   image: '',
 };
 
 const event63 = {
   business: 'Downtown Theater Group',
   category: 'Entertainment',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Shrek the Musical is coming to Cedar Rapids!',
+  startDate: 1576303200000,
+  endDate: 1577167200000,
   image: '',
 };
 
 const event64 = {
   business: 'Ravers Paradise',
   category: 'Entertainment',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: '20% off the entrance fee this whole month!',
+  startDate: 1572584400000,
+  endDate: 1575093600000,
   image: '',
 };
 
 const event65 = {
   business: 'Ravers Paradise',
   category: 'Entertainment',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: '$2 Jello shots at this Saturdays Rave!',
+  startDate: 1574557200000,
+  endDate: 1574589600000,
   image: '',
 };
 
 const event66 = {
   business: 'Ravers Paradise',
   category: 'Entertainment',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'A classical music rave. Come rave to some Mozart!',
+  startDate: 1575169200000,
+  endDate: 1575190800000,
   image: '',
 };
 
 const event67 = {
   business: 'Tigers Den',
   category: 'Bar',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Kids eat free before 7:00pm!',
+  startDate: 1573491600000,
+  endDate: 1575162000000,
   image: '',
 };
 
 const event68 = {
   business: 'Tigers Den',
   category: 'Bar',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: '1/2 price apps after 9:00!',
+  startDate: 1572487200000,
+  endDate: 1577858399000,
   image: '',
 };
 
 const event69 = {
   business: 'Tigers Den',
   category: 'Bar',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'The best happy hour deals in the corridor. Buy a beer get five free!',
+  startDate: 1561921200000,
+  endDate: 1580425200000,
   image: '',
 };
 
 const event70 = {
   business: 'Locally Sourced',
   category: 'Shopping',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Vendors from around the country are coming to sell their wares!',
+  startDate: 1575131400000,
+  endDate: 1575144000000,
   image: '',
 };
 
 const event71 = {
   business: 'Locally Sourced',
   category: 'Shopping',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Come see some local music while doing your shopping!',
+  startDate: 1575131400000,
+  endDate: 1575144000000,
   image: '',
 };
 
 const event72 = {
   business: 'Locally Sourced',
   category: 'Shopping',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Market afternoon! Come get some drinks and shop local vendors.',
+  startDate: 1574552700000,
+  endDate: 1574574300000,
   image: '',
 };
 
 const event73 = {
   business: 'Doughnut Madness',
   category: 'Dining',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Buy a coffee get a free doughnut!',
+  startDate: 1574229600000,
+  endDate: 1577858400000,
   image: '',
 };
 
 const event74 = {
   business: 'Doughnut Madness',
   category: 'Dining',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'A dozen doughnuts for only five dolars!',
+  startDate: 1574488800000,
+  endDate: 1575093600000,
   image: '',
 };
 
 const event75 = {
   business: 'Doughnut Madness',
   category: 'Dining',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'For those serving in our military, come get a coffee on us!',
+  startDate: 1605333600000,
+  endDate: 1606716000000,
   image: '',
 };
 
