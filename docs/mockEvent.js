@@ -214,14 +214,7 @@ const event24 = {
   image: '',
 };
 
-const event25 = {
-  business: 'Brewhalla',
-  category: 'Bar',
-  description: '',
-  startDate: ,
-  endDate: ,
-  image: '',
-};
+const event25 = ;
 
 const event26 = {
   business: 'Brewhalla',
@@ -574,14 +567,7 @@ const event68 = {
   image: '',
 };
 
-const event69 = {
-  business: 'Tigers Den',
-  category: 'Bar',
-  description: 'The best happy hour deals in the corridor. Buy a beer get five free!',
-  startDate: 1561921200000,
-  endDate: 1580425200000,
-  image: '',
-};
+const event69 = ;
 
 const event70 = {
   business: 'Locally Sourced',
@@ -619,14 +605,7 @@ const event73 = {
   image: '',
 };
 
-const event74 = {
-  business: 'Doughnut Madness',
-  category: 'Dining',
-  description: 'A dozen doughnuts for only five dolars!',
-  startDate: 1574488800000,
-  endDate: 1575093600000,
-  image: '',
-};
+const event74 = ;
 
 const event75 = {
   business: 'Doughnut Madness',
