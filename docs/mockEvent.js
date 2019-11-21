@@ -351,7 +351,7 @@ const event39 = {
 
 const event40 = {
   business: 'Karaoke CRapids',
-  category: 'Entertainmen',
+  category: 'Entertainment',
   description: '',
   startDate: ,
   endDate: ,
@@ -360,7 +360,7 @@ const event40 = {
 
 const event41 = {
   business: 'Karaoke CRapids',
-  category: 'Entertainmen',
+  category: 'Entertainment',
   description: '',
   startDate: ,
   endDate: ,
@@ -369,7 +369,7 @@ const event41 = {
 
 const event42 = {
   business: 'Karaoke CRapids',
-  category: 'Entertainmen',
+  category: 'Entertainment',
   description: '',
   startDate: ,
   endDate: ,
@@ -397,36 +397,27 @@ const event44 = {
 const event45 = {
   business: 'The Atlas Room',
   category: 'Bar',
-  description: '',
-  startDate: ,
-  endDate: ,
-  image: '',
-};
-
-const event46 = {
-  business: 'Locksmith Smithy',
-  category: 'Services',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Half price apps during happy hour!',
+  startDate: 1572584400000,
+  endDate: 1577772000000,
   image: '',
 };
 
 const event47 = {
   business: 'Locksmith Smithy',
   category: 'Services',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Key cutting is half off this week!',
+  startDate: 1573970400000,
+  endDate: 1574488800000,
   image: '',
 };
 
 const event48 = {
   business: 'Locksmith Smithy',
   category: 'Services',
-  description: '',
-  startDate: ,
-  endDate: ,
+  description: 'Stalker bothering you? No problem! 20% off lock changing!',
+  startDate: 1573711200000,
+  endDate: 1575093600000,
   image: '',
 };
 
