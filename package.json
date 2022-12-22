@@ -25,7 +25,7 @@
     "dotenv": "^8.1.0",
     "express": "^4.17.1",
     "express-swagger-generator": "^1.1.15",
-    "jsonwebtoken": "^8.5.1",
+    "jsonwebtoken": "^9.0.0",
     "mongoose": "^5.7.4",
     "morgan": "^1.9.1",
     "swagger": "^0.7.5",
